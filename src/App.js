@@ -2,11 +2,12 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:00:57+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-03T11:45:40+02:00
+ * @Last modified time: 2020-06-03T16:38:45+02:00
  */
 import React, { Component } from "react";
 import SideBar from "./components/SideBar";
 import Main from "./components/Main";
+import Built from "./components/Built";
 import "./app.css";
 
 class App extends Component {
@@ -18,13 +19,48 @@ class App extends Component {
       ram: "",
       gpu: ""
     },
-    cost: {}
+    cost: { cpu: 0, mb: 0, ram: 0, gpu: 0 }
   };
   handleClick = e => {
     this.setState({ view: e.target.value });
   };
   updateBuild = item => {
-    this.setState({ myBuild: { cpu: item } });
+    switch (this.state.view) {
+      case "cpu":
+        this.setState(prevState => ({
+          myBuild: {
+            ...prevState.myBuild,
+            cpu: item
+          }
+        }));
+        break;
+      case "gpu":
+        this.setState(prevState => ({
+          myBuild: {
+            ...prevState.myBuild,
+            gpu: item
+          }
+        }));
+        break;
+      case "mother":
+        this.setState(prevState => ({
+          myBuild: {
+            ...prevState.myBuild,
+            mb: item
+          }
+        }));
+        break;
+      case "ram":
+        this.setState(prevState => ({
+          myBuild: {
+            ...prevState.myBuild,
+            ram: item
+          }
+        }));
+        break;
+      default:
+        return null;
+    }
   };
   componentDidMount = () => {
     let data = localStorage.getItem("mypcbuild");
@@ -40,9 +76,12 @@ class App extends Component {
   render() {
     return (
       <div className="container">
+        <Built />
         <div className="app">
           <SideBar handleClick={this.handleClick} />
-          <Main view={this.state.view} updateBuild={this.updateBuild} />
+          <div className="main">
+            <Main view={this.state.view} updateBuild={this.updateBuild} />
+          </div>
         </div>
       </div>
     );
