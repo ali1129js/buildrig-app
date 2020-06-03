@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:00:57+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-03T16:38:45+02:00
+ * @Last modified time: 2020-06-03T19:48:34+02:00
  */
 import React, { Component } from "react";
 import SideBar from "./components/SideBar";
@@ -24,42 +24,36 @@ class App extends Component {
   handleClick = e => {
     this.setState({ view: e.target.value });
   };
-  updateBuild = item => {
+  updateBuild = (item, cost) => {
+    console.log("Item is =", item);
+    console.log("Price is =", cost);
     switch (this.state.view) {
       case "cpu":
         this.setState(prevState => ({
-          myBuild: {
-            ...prevState.myBuild,
-            cpu: item
-          }
+          myBuild: { ...prevState.myBuild, cpu: item },
+          cost: { ...prevState.cost, cpu: cost }
         }));
         break;
       case "gpu":
         this.setState(prevState => ({
-          myBuild: {
-            ...prevState.myBuild,
-            gpu: item
-          }
+          cost: { ...prevState.cost, gpu: cost },
+          myBuild: { ...prevState.myBuild, gpu: item }
         }));
         break;
       case "mother":
         this.setState(prevState => ({
-          myBuild: {
-            ...prevState.myBuild,
-            mb: item
-          }
+          cost: { ...prevState.cost, mb: cost },
+          myBuild: { ...prevState.myBuild, mb: item }
         }));
         break;
       case "ram":
         this.setState(prevState => ({
-          myBuild: {
-            ...prevState.myBuild,
-            ram: item
-          }
+          cost: { ...prevState.cost, ram: cost },
+          myBuild: { ...prevState.myBuild, ram: item }
         }));
         break;
       default:
-        return null;
+        return;
     }
   };
   componentDidMount = () => {
@@ -70,7 +64,7 @@ class App extends Component {
     }
   };
   componentDidUpdate = () => {
-    let data = JSON.stringify(this.state.myBuild);
+    let data = JSON.stringify(this.state);
     localStorage.setItem("mypcbuild", data);
   };
   render() {
