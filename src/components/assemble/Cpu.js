@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:44:58+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-03T19:12:20+02:00
+ * @Last modified time: 2020-06-04T11:26:22+02:00
  */
 import React, { useState } from "react";
 
@@ -21,14 +21,14 @@ const Cpu = ({ updateBuild }) => {
         <input
           type="text"
           placeholder="Enter a CPU"
-          className="ml-3"
+          className="input"
           value={cpu}
           onChange={e => setCpu(e.target.value)}
         />
         <input
           type="text"
           placeholder="Cost"
-          className="ml-3"
+          className="input"
           value={cost}
           onChange={e => setCost(e.target.value)}
         />

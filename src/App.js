@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:00:57+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-03T19:48:34+02:00
+ * @Last modified time: 2020-06-04T12:15:24+02:00
  */
 import React, { Component } from "react";
 import SideBar from "./components/SideBar";
@@ -11,22 +11,23 @@ import Built from "./components/Built";
 import "./app.css";
 
 class App extends Component {
-  state = {
-    view: "",
-    myBuild: {
-      cpu: "",
-      mb: "",
-      ram: "",
-      gpu: ""
-    },
-    cost: { cpu: 0, mb: 0, ram: 0, gpu: 0 }
-  };
+  constructor() {
+    super();
+    this.state = {
+      view: "",
+      myBuild: {
+        cpu: "",
+        mb: "",
+        ram: "",
+        gpu: ""
+      },
+      cost: { cpu: 0, mb: 0, ram: 0, gpu: 0 }
+    };
+  }
   handleClick = e => {
     this.setState({ view: e.target.value });
   };
   updateBuild = (item, cost) => {
-    console.log("Item is =", item);
-    console.log("Price is =", cost);
     switch (this.state.view) {
       case "cpu":
         this.setState(prevState => ({
@@ -57,20 +58,19 @@ class App extends Component {
     }
   };
   componentDidMount = () => {
-    let data = localStorage.getItem("mypcbuild");
-    if (data) {
-      let myBuild = JSON.parse(data);
-      this.setState({ myBuild });
+    let myPc = localStorage.getItem("mypcbuild");
+    if (myPc) {
+      this.setState(JSON.parse(myPc));
     }
   };
   componentDidUpdate = () => {
-    let data = JSON.stringify(this.state);
-    localStorage.setItem("mypcbuild", data);
+    let myPc = JSON.stringify(this.state);
+    localStorage.setItem("mypcbuild", myPc);
   };
   render() {
     return (
       <div className="container">
-        <Built />
+        <Built assemble={this.state} />
         <div className="app">
           <SideBar handleClick={this.handleClick} />
           <div className="main">
