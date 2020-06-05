@@ -2,18 +2,20 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:45:42+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-03T16:50:30+02:00
+ * @Last modified time: 2020-06-05T10:05:49+02:00
  */
 import React, { useState } from "react";
 
 const MotherBoard = ({ updateBuild }) => {
-  const [mb, setMb] = useState("");
-  const [cost, setCost] = useState(0);
+  const [brand, setMb] = useState("");
+  const [cost, setCost] = useState(null);
   const handleSubmit = e => {
     e.preventDefault();
-    updateBuild(mb, cost);
+    let item = { brand, cost };
+    updateBuild(item);
+
     setMb("");
-    setCost(0);
+    setCost(null);
   };
   return (
     <div className="cpu">
@@ -22,7 +24,7 @@ const MotherBoard = ({ updateBuild }) => {
           type="text"
           placeholder="Enter a MotherBoard"
           className="ml-3"
-          value={mb}
+          value={brand}
           onChange={e => setMb(e.target.value)}
         />
         <input

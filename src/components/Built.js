@@ -2,14 +2,34 @@
  * @Author: Ali
  * @Date:   2020-06-03T15:57:39+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-04T12:49:58+02:00
+ * @Last modified time: 2020-06-05T10:09:29+02:00
  */
 import React from "react";
 
-const Built = ({ assemble: { cost } }) => {
+const Built = ({ myBuild: { cpu, gpu, mb, ram } }) => {
+  console.log(cpu.cost);
   return (
     <div className="built">
-      {cost.cpu},{cost.gpu},{cost.ram},{cost.mb},"Total: "
+      <div className="cpu">
+        <strong> CPU: </strong>
+        {cpu.brand} <strong> Cost: </strong>
+        {cpu.cost}
+      </div>
+      <div className="gpu">
+        <strong> GPU: </strong>
+        {gpu.brand} <strong> Cost: </strong>
+        {gpu.cost}
+      </div>
+      <div className="ram">
+        <strong> RAM: </strong>
+        {ram.brand} <strong> Cost: </strong>
+        {ram.cost}
+      </div>
+      <div className="mb">
+        <strong> MB: </strong>
+        {mb.brand} <strong> Cost: </strong>
+        {mb.cost}
+      </div>
     </div>
   );
 };

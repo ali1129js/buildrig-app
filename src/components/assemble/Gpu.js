@@ -2,18 +2,19 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:45:20+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-03T19:18:31+02:00
+ * @Last modified time: 2020-06-05T10:05:59+02:00
  */
 import React, { useState } from "react";
 
 const Gpu = ({ updateBuild }) => {
-  const [gpu, setGpu] = useState("");
-  const [cost, setCost] = useState(0);
+  const [brand, setGpu] = useState("");
+  const [cost, setCost] = useState(null);
   const handleSubmit = e => {
     e.preventDefault();
-    updateBuild(gpu, cost);
+    let item = { brand, cost };
+    updateBuild(item);
     setGpu("");
-    setCost(0);
+    setCost(null);
   };
   return (
     <div className="cpu">
@@ -22,7 +23,7 @@ const Gpu = ({ updateBuild }) => {
           type="text"
           placeholder="Enter a GPU"
           className="ml-3"
-          value={gpu}
+          value={brand}
           onChange={e => setGpu(e.target.value)}
         />
         <input

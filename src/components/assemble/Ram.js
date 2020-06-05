@@ -2,19 +2,20 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:46:02+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-03T17:19:14+02:00
+ * @Last modified time: 2020-06-05T10:05:41+02:00
  */
 import React, { useState } from "react";
 
 const Ram = ({ updateBuild }) => {
-  const [ram, setRam] = useState("");
-  const [cost, setCost] = useState(0);
+  const [brand, setRam] = useState("");
+  const [cost, setCost] = useState(null);
 
   const handleSubmit = e => {
     e.preventDefault();
-    updateBuild(ram, cost);
+    let item = { brand, cost };
+    updateBuild(item);
     setRam("");
-    setCost(0);
+    setCost(null);
   };
   return (
     <div className="cpu">
@@ -23,7 +24,7 @@ const Ram = ({ updateBuild }) => {
           type="text"
           placeholder="Enter a RAM"
           className="ml-3"
-          value={ram}
+          value={brand}
           onChange={e => setRam(e.target.value)}
         />
         <input

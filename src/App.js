@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:00:57+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-04T12:15:24+02:00
+ * @Last modified time: 2020-06-05T09:56:17+02:00
  */
 import React, { Component } from "react";
 import SideBar from "./components/SideBar";
@@ -16,40 +16,35 @@ class App extends Component {
     this.state = {
       view: "",
       myBuild: {
-        cpu: "",
-        mb: "",
-        ram: "",
-        gpu: ""
-      },
-      cost: { cpu: 0, mb: 0, ram: 0, gpu: 0 }
+        cpu: { brand: "", cost: 0 },
+        gpu: { brand: "", cost: 0 },
+        ram: { brand: "", cost: 0 },
+        mb: { brand: "", cost: 0 }
+      }
     };
   }
   handleClick = e => {
     this.setState({ view: e.target.value });
   };
-  updateBuild = (item, cost) => {
+  updateBuild = item => {
     switch (this.state.view) {
       case "cpu":
         this.setState(prevState => ({
-          myBuild: { ...prevState.myBuild, cpu: item },
-          cost: { ...prevState.cost, cpu: cost }
+          myBuild: { ...prevState.myBuild, cpu: item }
         }));
         break;
       case "gpu":
         this.setState(prevState => ({
-          cost: { ...prevState.cost, gpu: cost },
           myBuild: { ...prevState.myBuild, gpu: item }
         }));
         break;
       case "mother":
         this.setState(prevState => ({
-          cost: { ...prevState.cost, mb: cost },
           myBuild: { ...prevState.myBuild, mb: item }
         }));
         break;
       case "ram":
         this.setState(prevState => ({
-          cost: { ...prevState.cost, ram: cost },
           myBuild: { ...prevState.myBuild, ram: item }
         }));
         break;
@@ -70,7 +65,7 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <Built assemble={this.state} />
+        <Built myBuild={this.state.myBuild} />
         <div className="app">
           <SideBar handleClick={this.handleClick} />
           <div className="main">

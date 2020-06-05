@@ -2,18 +2,19 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:44:58+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-04T11:26:22+02:00
+ * @Last modified time: 2020-06-05T10:05:30+02:00
  */
 import React, { useState } from "react";
 
 const Cpu = ({ updateBuild }) => {
-  const [cpu, setCpu] = useState("");
-  const [cost, setCost] = useState(0);
+  const [brand, setCpu] = useState("");
+  const [cost, setCost] = useState(null);
   const handleSubmit = e => {
     e.preventDefault();
-    updateBuild(cpu, cost);
+    let item = { brand, cost };
+    updateBuild(item);
     setCpu("");
-    setCost(0);
+    setCost(null);
   };
   return (
     <div className="cpu">
@@ -22,7 +23,7 @@ const Cpu = ({ updateBuild }) => {
           type="text"
           placeholder="Enter a CPU"
           className="input"
-          value={cpu}
+          value={brand}
           onChange={e => setCpu(e.target.value)}
         />
         <input
