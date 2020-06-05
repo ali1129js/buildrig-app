@@ -2,34 +2,34 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:44:58+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-05T10:05:30+02:00
+ * @Last modified time: 2020-06-05T10:28:55+02:00
  */
 import React, { useState } from "react";
 
 const Cpu = ({ updateBuild }) => {
   const [brand, setCpu] = useState("");
-  const [cost, setCost] = useState(null);
+  const [cost, setCost] = useState("");
   const handleSubmit = e => {
     e.preventDefault();
     let item = { brand, cost };
     updateBuild(item);
     setCpu("");
-    setCost(null);
+    setCost("");
   };
   return (
     <div className="cpu">
-      <form onSubmit={e => handleSubmit(e)}>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Enter a CPU"
-          className="input"
+          className="ml-3"
           value={brand}
           onChange={e => setCpu(e.target.value)}
         />
         <input
           type="text"
           placeholder="Cost"
-          className="input"
+          className="ml-3"
           value={cost}
           onChange={e => setCost(e.target.value)}
         />
