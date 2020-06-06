@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:00:57+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-05T09:56:17+02:00
+ * @Last modified time: 2020-06-06T14:49:59+02:00
  */
 import React, { Component } from "react";
 import SideBar from "./components/SideBar";
@@ -19,7 +19,8 @@ class App extends Component {
         cpu: { brand: "", cost: 0 },
         gpu: { brand: "", cost: 0 },
         ram: { brand: "", cost: 0 },
-        mb: { brand: "", cost: 0 }
+        mb: { brand: "", cost: 0 },
+        hdd: { brand: "", cost: 0 }
       }
     };
   }
@@ -46,6 +47,11 @@ class App extends Component {
       case "ram":
         this.setState(prevState => ({
           myBuild: { ...prevState.myBuild, ram: item }
+        }));
+        break;
+      case "hdd":
+        this.setState(prevState => ({
+          myBuild: { ...prevState.myBuild, hdd: item }
         }));
         break;
       default:
