@@ -2,13 +2,14 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:44:58+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-05T10:28:55+02:00
+ * @Last modified time: 2020-06-08T06:42:13+02:00
  */
 import React, { useState } from "react";
 
 const Cpu = ({ updateBuild }) => {
   const [brand, setCpu] = useState("");
   const [cost, setCost] = useState("");
+
   const handleSubmit = e => {
     e.preventDefault();
     let item = { brand, cost };
@@ -16,6 +17,7 @@ const Cpu = ({ updateBuild }) => {
     setCpu("");
     setCost("");
   };
+
   return (
     <div className="cpu">
       <form onSubmit={handleSubmit}>
