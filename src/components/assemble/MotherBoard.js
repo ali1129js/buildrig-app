@@ -2,13 +2,14 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:45:42+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-05T10:28:44+02:00
+ * @Last modified time: 2020-06-09T15:23:26+02:00
  */
 import React, { useState } from "react";
 
 const MotherBoard = ({ updateBuild }) => {
   const [brand, setMb] = useState("");
   const [cost, setCost] = useState("");
+
   const handleSubmit = e => {
     e.preventDefault();
     let item = { brand, cost };
@@ -16,25 +17,29 @@ const MotherBoard = ({ updateBuild }) => {
     setMb("");
     setCost("");
   };
+
   return (
     <div className="cpu">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Enter a MotherBoard"
-          className="ml-3"
-          value={brand}
-          onChange={e => setMb(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Cost"
-          className="ml-3"
-          value={cost}
-          onChange={e => setCost(e.target.value)}
-        />
-        <button> Update My myBuild</button>
-      </form>
+      <div className="input-group mb-3">
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Enter a MotherBoard"
+            className="form-control"
+            value={brand}
+            onChange={e => setMb(e.target.value)}
+          />
+          <button className="btn btn-info mb-2">Search</button>
+          <input
+            type="text"
+            placeholder="Cost"
+            className="form-control"
+            value={cost}
+            onChange={e => setCost(e.target.value)}
+          />
+          <button className="btn btn-success"> Update My Build</button>
+        </form>
+      </div>
     </div>
   );
 };
