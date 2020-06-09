@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:17:24+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-08T13:31:32+02:00
+ * @Last modified time: 2020-06-09T09:48:43+02:00
  */
 
 .app {
@@ -23,19 +23,26 @@
   width: 20%;
 }
 
-.built {
- border: 2px solid green;
- padding :20px;
- text-align: center;
-}
+
 table, th, td {
   border: 1px solid black;
   padding: 5px;
+  font-weight: bold;
+  text-align: center;
 }
 table {
   border-spacing: 15px;
 }
 button{
   width: 80%;
-  
-}
+  }
+
+
+  thead,  tfoot {
+      background-color: #3f87a6;
+      color: #fff;
+  }
+
+  tbody {
+      background-color: #e4f0f5;
+  }
