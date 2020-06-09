@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:00:57+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-09T08:59:25+02:00
+ * @Last modified time: 2020-06-09T15:18:45+02:00
  */
 import React, { Component } from "react";
 import SideBar from "./components/SideBar";
@@ -116,11 +116,11 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <Built myBuild={this.state.myBuild} />
         <div className="app">
           <SideBar handleClick={this.handleClick} />
           <div className="main">
             <Main view={this.state.view} updateBuild={this.updateBuild} />
+            <Built myBuild={this.state.myBuild} />
           </div>
         </div>
       </div>

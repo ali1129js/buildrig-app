@@ -2,27 +2,24 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:17:24+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-09T09:48:43+02:00
+ * @Last modified time: 2020-06-09T15:16:23+02:00
  */
 
 .app {
   width: 100%;
   display: flex;
   font-size: 2rem;
-  border: 2px solid red;
 }
 
 .main {
-  border: 2px solid blue;
-  width: 100%;
+  justify-content: space-between;
   height: 100vh;
-  margin-left: 20px;
+  width:100%;
   padding:10px;
 }
 .sidebar {
-  width: 20%;
+  margin: 10px;
 }
-
 
 table, th, td {
   border: 1px solid black;
@@ -33,16 +30,10 @@ table, th, td {
 table {
   border-spacing: 15px;
 }
-button{
-  width: 80%;
-  }
-
-
-  thead,  tfoot {
+thead,  tfoot {
       background-color: #3f87a6;
       color: #fff;
   }
-
-  tbody {
+tbody {
       background-color: #e4f0f5;
   }

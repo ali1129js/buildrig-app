@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:44:58+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-08T06:42:13+02:00
+ * @Last modified time: 2020-06-09T14:54:25+02:00
  */
 import React, { useState } from "react";
 
@@ -20,23 +20,26 @@ const Cpu = ({ updateBuild }) => {
 
   return (
     <div className="cpu">
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Enter a CPU"
-          className="ml-3"
-          value={brand}
-          onChange={e => setCpu(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Cost"
-          className="ml-3"
-          value={cost}
-          onChange={e => setCost(e.target.value)}
-        />
-        <button> Update My myBuild</button>
-      </form>
+      <div className="input-group mb-3">
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Enter a CPU"
+            className="form-control"
+            value={brand}
+            onChange={e => setCpu(e.target.value)}
+          />
+          <button className="btn btn-info mb-2">Search</button>
+          <input
+            type="text"
+            placeholder="Cost"
+            className="form-control"
+            value={cost}
+            onChange={e => setCost(e.target.value)}
+          />
+          <button className="btn btn-success"> Update My Build</button>
+        </form>
+      </div>
     </div>
   );
 };
