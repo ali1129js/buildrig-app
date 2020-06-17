@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:45:20+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-09T14:58:34+02:00
+ * @Last modified time: 2020-06-17T15:16:49+02:00
  */
 import React, { useState } from "react";
 
@@ -29,7 +29,7 @@ const Gpu = ({ updateBuild }) => {
             value={brand}
             onChange={e => setGpu(e.target.value)}
           />
-          <button className="btn btn-info mb-2">Search</button>
+
           <input
             type="text"
             placeholder="Cost"

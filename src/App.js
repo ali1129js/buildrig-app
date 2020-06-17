@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:00:57+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-09T15:18:45+02:00
+ * @Last modified time: 2020-06-09T22:41:46+02:00
  */
 import React, { Component } from "react";
 import SideBar from "./components/SideBar";

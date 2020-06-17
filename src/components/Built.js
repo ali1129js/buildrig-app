@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-03T15:57:39+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-09T09:47:26+02:00
+ * @Last modified time: 2020-06-09T22:46:00+02:00
  */
 import React from "react";
 
@@ -104,7 +104,7 @@ const Built = ({
           </tr>
         </tbody>
       </table>
-      <tfoot>
+      <tbody className="foot">
         <tr>
           <th>Totals</th>
           <td>
@@ -122,7 +122,7 @@ const Built = ({
               +extr2.cost}
           </td>
         </tr>
-      </tfoot>
+      </tbody>
     </>
   );
 };

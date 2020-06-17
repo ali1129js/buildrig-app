@@ -2,25 +2,33 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:17:24+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-09T15:16:23+02:00
+ * @Last modified time: 2020-06-10T16:00:45+02:00
  */
 
 .app {
   width: 100%;
   display: flex;
   font-size: 2rem;
+  background-color:#95afc0;
+  min-height: 100vh;
 }
 
 .main {
   justify-content: space-between;
-  height: 100vh;
   width:100%;
   padding:10px;
 }
+.form{
+  border:2px solid orange;
+}
 .sidebar {
   margin: 10px;
+  padding: 10px;
 }
-
+.brand{
+  border:2px solid red;
+display: inline-block;
+}
 table, th, td {
   border: 1px solid black;
   padding: 5px;
@@ -30,10 +38,14 @@ table, th, td {
 table {
   border-spacing: 15px;
 }
-thead,  tfoot {
+thead {
       background-color: #3f87a6;
       color: #fff;
   }
 tbody {
       background-color: #e4f0f5;
   }
+.foot{
+  background-color: #3f87a6;
+  color: #fff;
+}

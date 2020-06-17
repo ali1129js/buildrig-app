@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:45:42+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-09T15:23:26+02:00
+ * @Last modified time: 2020-06-17T15:17:02+02:00
  */
 import React, { useState } from "react";
 
@@ -29,7 +29,7 @@ const MotherBoard = ({ updateBuild }) => {
             value={brand}
             onChange={e => setMb(e.target.value)}
           />
-          <button className="btn btn-info mb-2">Search</button>
+
           <input
             type="text"
             placeholder="Cost"

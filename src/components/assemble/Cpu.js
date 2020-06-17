@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:44:58+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-09T14:54:25+02:00
+ * @Last modified time: 2020-06-17T15:16:38+02:00
  */
 import React, { useState } from "react";
 
@@ -19,7 +19,7 @@ const Cpu = ({ updateBuild }) => {
   };
 
   return (
-    <div className="cpu">
+    <>
       <div className="input-group mb-3">
         <form onSubmit={handleSubmit}>
           <input
@@ -29,7 +29,7 @@ const Cpu = ({ updateBuild }) => {
             value={brand}
             onChange={e => setCpu(e.target.value)}
           />
-          <button className="btn btn-info mb-2">Search</button>
+
           <input
             type="text"
             placeholder="Cost"
@@ -40,7 +40,7 @@ const Cpu = ({ updateBuild }) => {
           <button className="btn btn-success"> Update My Build</button>
         </form>
       </div>
-    </div>
+    </>
   );
 };
 
