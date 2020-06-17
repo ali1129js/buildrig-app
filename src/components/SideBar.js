@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:15:37+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-09T15:10:02+02:00
+ * @Last modified time: 2020-06-17T15:54:28+02:00
  */
 import React from "react";
 
@@ -42,7 +42,14 @@ const SideBar = ({ handleClick }) => (
         onClick={handleClick}
         value={"hdd"}
       >
-        Hard Disk
+        Main Disk
+      </button>
+      <button
+        className="btn btn-secondary btn-lg m-1"
+        onClick={handleClick}
+        value={"hdd2"}
+      >
+        Secondary Disk
       </button>
       <button
         className="btn btn-secondary btn-lg m-1"

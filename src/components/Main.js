@@ -2,10 +2,10 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:16:26+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-10T11:32:17+02:00
+ * @Last modified time: 2020-06-17T15:53:39+02:00
  */
 import React from "react";
-import { Cpu, Gpu, MotherBoard, Ram, Hdd } from "./assemble/index.js";
+import { Cpu, Gpu, MotherBoard, Ram, Hdd, Hdd2 } from "./assemble/index.js";
 
 const Main = ({ view, updateBuild }) => {
   switch (view) {
@@ -23,6 +23,8 @@ const Main = ({ view, updateBuild }) => {
       return <Ram updateBuild={updateBuild} />;
     case "hdd":
       return <Hdd updateBuild={updateBuild} />;
+    case "hdd2":
+      return <Hdd2 updateBuild={updateBuild} />;
     default:
       return null;
   }

@@ -1,20 +1,20 @@
 /**
  * @Author: Ali
- * @Date:   2020-06-06T13:45:02+02:00
+ * @Date:   2020-06-17T15:51:40+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-17T15:26:22+02:00
+ * @Last modified time: 2020-06-17T15:52:27+02:00
  */
 import React, { useState } from "react";
 
-const Hdd = ({ updateBuild }) => {
-  const [brand, setHdd] = useState("");
+const Hdd2 = ({ updateBuild }) => {
+  const [brand, setHdd2] = useState("");
   const [cost, setCost] = useState("");
 
   const handleSubmit = e => {
     e.preventDefault();
     let item = { brand, cost };
     updateBuild(item);
-    setHdd("");
+    setHdd2("");
     setCost("");
   };
 
@@ -24,10 +24,10 @@ const Hdd = ({ updateBuild }) => {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder="Primary Storage"
+            placeholder="Secondary Storage"
             className="form-control"
             value={brand}
-            onChange={e => setHdd(e.target.value)}
+            onChange={e => setHdd2(e.target.value)}
             required
           />
 
@@ -46,4 +46,4 @@ const Hdd = ({ updateBuild }) => {
   );
 };
 
-export default Hdd;
+export default Hdd2;

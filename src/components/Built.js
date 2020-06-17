@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-03T15:57:39+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-09T22:46:00+02:00
+ * @Last modified time: 2020-06-17T15:21:37+02:00
  */
 import React from "react";
 
@@ -11,6 +11,25 @@ const Built = ({
 }) => {
   return (
     <>
+      <tbody className="ttl">
+        <tr>
+          <th>Totals</th>
+          <td>
+            {+cpu.cost +
+              +gpu.cost +
+              +ram.cost +
+              +mb.cost +
+              +hdd.cost +
+              +hdd2.cost +
+              +ps.cost +
+              +fan.cost +
+              +cas.cost +
+              +monitor.cost +
+              +extr1.cost +
+              +extr2.cost}
+          </td>
+        </tr>
+      </tbody>
       <table>
         <thead>
           <tr>
@@ -104,25 +123,6 @@ const Built = ({
           </tr>
         </tbody>
       </table>
-      <tbody className="foot">
-        <tr>
-          <th>Totals</th>
-          <td>
-            {+cpu.cost +
-              +gpu.cost +
-              +ram.cost +
-              +mb.cost +
-              +hdd.cost +
-              +hdd2.cost +
-              +ps.cost +
-              +fan.cost +
-              +cas.cost +
-              +monitor.cost +
-              +extr1.cost +
-              +extr2.cost}
-          </td>
-        </tr>
-      </tbody>
     </>
   );
 };
