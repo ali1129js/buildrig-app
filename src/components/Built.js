@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-03T15:57:39+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-17T15:21:37+02:00
+ * @Last modified time: 2020-06-21T13:12:46+02:00
  */
 import React from "react";
 
@@ -35,7 +35,7 @@ const Built = ({
           <tr>
             <th>Component</th>
             <th>Model</th>
-            <th>Best Price</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody>

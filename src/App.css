@@ -2,43 +2,48 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:17:24+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-17T15:25:36+02:00
+ * @Last modified time: 2020-06-21T13:10:07+02:00
  */
 
 .app {
   width: 100%;
   display: flex;
-  font-size: 2rem;
-  background-color:#95afc0;
+  font-size: 1.6rem;
+  background-color:#0c2461;
   min-height: 100vh;
 }
 
-.main {
-  justify-content: space-between;
-  width:100%;
-  padding:10px;
+.input{
+  display: flex;
+margin-top: 25px;
+
+}
+.name{
+  color: #f8c291;
+  margin:auto;
 }
 .form{
   border:2px solid orange;
+
 }
 .sidebar {
   margin: 10px;
   padding: 10px;
 }
-.brand{
-  border:2px solid red;
-}
+
 table, th, td {
   border: 1px solid black;
   padding: 5px;
+  margin: 10px;
   font-weight: bold;
   text-align: center;
+  box-shadow: 2px 2px 2px 2px #000;
 }
 table {
-  border-spacing: 15px;
+  border-spacing: 10px;
 }
 thead {
-      background-color: #3f87a6;
+      background-color: #6a89cc;
       color: #fff;
   }
 tbody {
