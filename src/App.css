@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:17:24+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-21T13:10:07+02:00
+ * @Last modified time: 2020-06-22T11:44:12+02:00
  */
 
 .app {
@@ -33,7 +33,7 @@ margin-top: 25px;
 
 table, th, td {
   border: 1px solid black;
-  padding: 5px;
+  padding: 10px;
   margin: 10px;
   font-weight: bold;
   text-align: center;

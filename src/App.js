@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:00:57+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-09T22:41:46+02:00
+ * @Last modified time: 2020-06-22T11:52:40+02:00
  */
 import React, { Component } from "react";
 import SideBar from "./components/SideBar";
@@ -15,6 +15,7 @@ class App extends Component {
     super();
     this.state = {
       view: "",
+      savedBuilds: {},
       myBuild: {
         cpu: { brand: "", cost: 0 },
         gpu: { brand: "", cost: 0 },
@@ -113,6 +114,14 @@ class App extends Component {
     let myPc = JSON.stringify(this.state);
     localStorage.setItem("mypcbuild", myPc);
   };
+
+  saveBuild = () => {
+    let saveB1 = this.state.myBuild;
+    this.setState({ savedBuilds: saveB1 });
+  };
+
+  loadBuild = () => {};
+
   render() {
     return (
       <div className="container">
@@ -120,7 +129,11 @@ class App extends Component {
           <SideBar handleClick={this.handleClick} />
           <div className="main">
             <Main view={this.state.view} updateBuild={this.updateBuild} />
-            <Built myBuild={this.state.myBuild} />
+            <Built
+              myBuild={this.state.myBuild}
+              saveBuild={this.saveBuild}
+              savedBuilds={this.state.savedBuilds}
+            />
           </div>
         </div>
       </div>
