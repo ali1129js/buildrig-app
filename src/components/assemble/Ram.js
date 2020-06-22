@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T13:46:02+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-17T15:17:10+02:00
+ * @Last modified time: 2020-06-22T13:00:07+02:00
  */
 import React, { useState } from "react";
 
@@ -19,17 +19,16 @@ const Ram = ({ updateBuild }) => {
   };
 
   return (
-    <div className="cpu">
-      <div className="input-group mb-3">
-        <form onSubmit={handleSubmit}>
+    <div className="input-group input-group-sm mb-3">
+      <form onSubmit={handleSubmit}>
+        <div className="input">
           <input
             type="text"
             placeholder="Enter a Memory"
-            className="form-control"
+            className="form-control mr-3"
             value={brand}
             onChange={e => setRam(e.target.value)}
           />
-
           <input
             type="text"
             placeholder="Cost"
@@ -37,9 +36,10 @@ const Ram = ({ updateBuild }) => {
             value={cost}
             onChange={e => setCost(e.target.value)}
           />
-          <button className="btn btn-success"> Update My Build</button>
-        </form>
-      </div>
+        </div>
+        <button className="btn btn-success mt-3"> Update My Build</button>
+      </form>
+      <div className="name"> {brand} </div>
     </div>
   );
 };

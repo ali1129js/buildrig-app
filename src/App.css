@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-02T11:17:24+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-22T11:44:12+02:00
+ * @Last modified time: 2020-06-22T12:48:54+02:00
  */
 
 .app {
@@ -22,10 +22,7 @@ margin-top: 25px;
   color: #f8c291;
   margin:auto;
 }
-.form{
-  border:2px solid orange;
 
-}
 .sidebar {
   margin: 10px;
   padding: 10px;

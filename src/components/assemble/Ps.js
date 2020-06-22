@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-20T10:32:57+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-20T10:39:26+02:00
+ * @Last modified time: 2020-06-22T13:00:03+02:00
  */
 import React, { useState } from "react";
 
@@ -20,27 +20,29 @@ const Ps = ({ updateBuild }) => {
 
   return (
     <>
-      <div className="input-group mb-3">
+      <div className="input-group input-group-sm mb-3">
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Power Supply Unit"
-            className="form-control"
-            value={brand}
-            onChange={e => setPs(e.target.value)}
-            required
-          />
-
-          <input
-            type="number"
-            placeholder="Cost"
-            className="form-control"
-            value={cost}
-            onChange={e => setCost(e.target.value)}
-            required
-          />
-          <button className="btn btn-success"> Update My Build</button>
+          <div className="input">
+            <input
+              type="text"
+              placeholder="Power Supply Unit"
+              className="form-control mr-3"
+              value={brand}
+              onChange={e => setPs(e.target.value)}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Cost"
+              className="form-control"
+              value={cost}
+              onChange={e => setCost(e.target.value)}
+              required
+            />
+          </div>
+          <button className="btn btn-success mt-3"> Update My Build</button>
         </form>
+        <div className="name"> {brand} </div>
       </div>
     </>
   );

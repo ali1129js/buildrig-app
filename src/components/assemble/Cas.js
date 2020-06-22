@@ -2,7 +2,7 @@
  * @Author: Ali
  * @Date:   2020-06-20T10:28:31+02:00
  * @Last modified by:   Ali
- * @Last modified time: 2020-06-21T13:16:07+02:00
+ * @Last modified time: 2020-06-22T12:45:21+02:00
  */
 import React, { useState } from "react";
 
@@ -34,7 +34,7 @@ const Cas = ({ updateBuild }) => {
             <input
               type="number"
               placeholder="Cost"
-              className="form-control sm"
+              className="form-control"
               value={cost}
               onChange={e => setCost(e.target.value)}
               required
