@@ -8,7 +8,7 @@ import React, { Component } from "react";
 import SideBar from "./components/SideBar";
 import Main from "./components/Main";
 import Built from "./components/Built";
-import "./app.css";
+import "./App.css";
 
 class App extends Component {
   constructor() {
