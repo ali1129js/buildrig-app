@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/buildrig-app/static/css/main.937908dc.chunk.css",
+    "main.js": "/buildrig-app/static/js/main.05558139.chunk.js",
+    "main.js.map": "/buildrig-app/static/js/main.05558139.chunk.js.map",
+    "runtime-main.js": "/buildrig-app/static/js/runtime-main.8acd1a05.js",
+    "runtime-main.js.map": "/buildrig-app/static/js/runtime-main.8acd1a05.js.map",
+    "static/js/2.cb599b44.chunk.js": "/buildrig-app/static/js/2.cb599b44.chunk.js",
+    "static/js/2.cb599b44.chunk.js.map": "/buildrig-app/static/js/2.cb599b44.chunk.js.map",
+    "index.html": "/buildrig-app/index.html",
+    "precache-manifest.727a2a4ea5d0b841b1d1f87a18ac48c6.js": "/buildrig-app/precache-manifest.727a2a4ea5d0b841b1d1f87a18ac48c6.js",
+    "service-worker.js": "/buildrig-app/service-worker.js",
+    "static/css/main.937908dc.chunk.css.map": "/buildrig-app/static/css/main.937908dc.chunk.css.map",
+    "static/js/2.cb599b44.chunk.js.LICENSE.txt": "/buildrig-app/static/js/2.cb599b44.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8acd1a05.js",
+    "static/js/2.cb599b44.chunk.js",
+    "static/css/main.937908dc.chunk.css",
+    "static/js/main.05558139.chunk.js"
+  ]
+}
