@@ -17,17 +17,13 @@ import {
   Extr1,
   Extr2,
   Cas,
-  Fan
+  Fan,
 } from "./assemble/index.js";
 
 const Main = ({ view, updateBuild }) => {
   switch (view) {
     case "cpu":
-      return (
-        <div className="form">
-          <Cpu updateBuild={updateBuild} />{" "}
-        </div>
-      );
+      return <Cpu updateBuild={updateBuild} />;
     case "gpu":
       return <Gpu updateBuild={updateBuild} />;
     case "mother":
