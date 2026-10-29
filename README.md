@@ -22,7 +22,7 @@ Live demo: https://ali1129js.github.io/buildrig-app/
 
 ## Example builds and prices
 
-The example builds live in `src/lib/presets.ts` and the rumoured hardware in `src/lib/rumours.ts`. Prices are German retail prices as of Oct 2026 (a period of very high memory, SSD and GPU prices), so check retailers before buying. The research with sources and dates is in `buildrig-research.md` (kept next to the project, not in the app). Presets are validated by tests: all categories valid, integer cents, and fixed totals.
+The example builds live in `src/lib/presets.ts` and the rumoured hardware in `src/lib/rumours.ts`. Prices are German retail prices as of the date in `PRICES_AS_OF` (`src/lib/presets.ts`, currently Oct 2026, a period of very high memory, SSD and GPU prices), so check retailers before buying. Change that one constant when you refresh the prices. The research with sources and dates is in `buildrig-research.md` (kept next to the project, not in the app). Presets are validated by tests: all categories valid, integer cents, and fixed totals.
 
 ## Stack
 

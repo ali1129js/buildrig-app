@@ -2,7 +2,9 @@ import { emptyBuild, totalCents, type Build, type PartEntry } from "./build";
 import { PARTS, type PartName } from "./parts";
 
 /** Shown wherever a preset price is shown. Prices are snapshots, not live data. */
-export const PRICE_NOTE = "Prices as of Oct 2026, check retailers.";
+/** The one place to change when the prices are refreshed. */
+export const PRICES_AS_OF = "Oct 2026";
+export const PRICE_NOTE = `Prices as of ${PRICES_AS_OF}, check retailers.`;
 
 export interface Preset {
   id: string;
@@ -53,9 +55,9 @@ export const PRESETS: readonly Preset[] = [
     id: "gaming-budget",
     name: "Budget gaming",
     purpose: "1080p gaming on a tight budget",
-    why: "DDR5 is very expensive in Oct 2026, so this uses AM4 and DDR4. A Ryzen 5 5600 and an RTX 5060 cover 1080p well, and the CPU cooler is in the box.",
+    why: `DDR5 is very expensive in ${PRICES_AS_OF}, so this uses AM4 and DDR4. A Ryzen 5 5600 and an RTX 5060 cover 1080p well, and the CPU cooler is in the box.`,
     notes: [
-      "Aimed at about 1.000 euros. At Oct 2026 prices it lands a bit above that.",
+      `Aimed at about 1.000 euros. At ${PRICES_AS_OF} prices it lands a bit above that.`,
       "AM4 has no CPU upgrade path beyond Ryzen 5000.",
       "The RTX 5060 has 8 GB of VRAM, which some new games exceed at high settings."
     ],
@@ -147,7 +149,7 @@ export const PRESETS: readonly Preset[] = [
     purpose: "Small, quiet everyday PC",
     why: "A 65 W Ryzen 5 with built-in graphics in a Mini-ITX case, cooled by a low-profile Noctua. No graphics card means low noise and low power.",
     notes: [
-      "16 GB of DDR5 already costs about 300 euros in Oct 2026.",
+      `16 GB of DDR5 already costs about 300 euros in ${PRICES_AS_OF}.`,
       "Fits the Fractal Terra: Mini-ITX board, SFX power supply, cooler up to 77 mm.",
       "No monitor is included."
     ],

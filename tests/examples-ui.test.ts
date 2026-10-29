@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it } from "vitest";
-import { PRESETS } from "../src/lib/presets";
+import { PRESETS, PRICE_NOTE } from "../src/lib/presets";
 import { renderPresetInfo, renderRumours } from "../src/ui/examples";
 
 describe("example build rendering", () => {
@@ -12,7 +12,7 @@ describe("example build rendering", () => {
     expect(container.textContent).toContain(preset.purpose);
     expect(container.textContent).toContain(preset.why);
     expect(container.textContent).toContain("4.406,70");
-    expect(container.textContent).toContain("Prices as of Oct 2026, check retailers.");
+    expect(container.textContent).toContain(PRICE_NOTE);
     expect(container.querySelectorAll(".preset-key-parts dt")).toHaveLength(3);
   });
 
