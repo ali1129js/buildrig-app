@@ -60,6 +60,7 @@ const themeSelect = byId("themeSelect", HTMLSelectElement);
 const presetSelect = byId("presetSelect", HTMLSelectElement);
 const loadPresetBtn = byId("loadPresetBtn", HTMLButtonElement);
 const presetInfo = byId("presetInfo", HTMLElement);
+byId("priceNote", HTMLElement).textContent = PRICE_NOTE;
 
 let build: Build = emptyBuild();
 let activePart: PartName = "CPU";

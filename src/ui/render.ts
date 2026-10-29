@@ -29,10 +29,10 @@ export function renderTable(body: HTMLElement, build: Build): void {
       const hasModel = entry.model.trim() !== "";
       return el(
         "tr",
-        {},
-        el("th", { scope: "row" }, part),
-        el("td", { class: hasModel ? "" : "empty" }, hasModel ? entry.model : EMPTY_MODEL_LABEL),
-        el("td", { class: "num" }, formatCents(entry.priceCents))
+        { role: "row" },
+        el("th", { scope: "row", role: "rowheader" }, part),
+        el("td", { class: hasModel ? "" : "empty", role: "cell" }, hasModel ? entry.model : EMPTY_MODEL_LABEL),
+        el("td", { class: "num", role: "cell" }, formatCents(entry.priceCents))
       );
     })
   );

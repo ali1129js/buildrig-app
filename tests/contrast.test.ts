@@ -60,7 +60,9 @@ const NON_TEXT_PAIRS: Array<[string, string]> = [
   ["focus", "bg"],
   ["focus", "surface"],
   ["focus", "surface-2"],
-  ["primary", "surface"]
+  ["primary", "surface"],
+  ["table-border", "table-bg"],
+  ["table-border", "table-alt"]
 ];
 
 const THEMES: Array<[string, string]> = [

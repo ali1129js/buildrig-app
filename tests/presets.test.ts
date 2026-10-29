@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { filledParts, totalCents } from "../src/lib/build";
 import { formatCents } from "../src/lib/money";
 import { isPartName, MODEL_MAX_LENGTH, MAX_PRICE_CENTS, PARTS } from "../src/lib/parts";
-import { getPreset, PRESETS, PRICE_NOTE, presetToBuild, presetTotalCents } from "../src/lib/presets";
+import { getPreset, PRESETS, PRICES_AS_OF, PRICE_NOTE, presetToBuild, presetTotalCents } from "../src/lib/presets";
 import { RUMOURS, RUMOUR_NOTE } from "../src/lib/rumours";
 import { parseBuild } from "../src/lib/storage";
 
@@ -83,7 +83,8 @@ describe("presets", () => {
       const text = [preset.name, preset.purpose, preset.why, ...preset.notes, ...Object.values(preset.parts).map((e) => e.model)].join(" ");
       expect(text).not.toMatch(DASHES);
     }
-    expect(PRICE_NOTE).toBe("Prices as of Oct 2026, check retailers.");
+    expect(PRICE_NOTE).toBe(`Prices as of ${PRICES_AS_OF}, check retailers.`);
+    expect(PRICES_AS_OF).toMatch(/^[A-Z][a-z]{2} \d{4}$/);
   });
 
   it("getPreset finds by id and returns undefined otherwise", () => {
