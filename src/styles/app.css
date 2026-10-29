@@ -364,6 +364,7 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  flex-wrap: wrap;
   gap: var(--space-4);
   margin-bottom: var(--space-5);
 }
@@ -741,6 +742,13 @@ dialog.confirm p {
 
 @media (max-width: 640px) {
   .examples-controls {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Stack the calculator and the table before the table column gets too narrow for the total. */
+@media (max-width: 1100px) {
+  .dashboard {
     grid-template-columns: 1fr;
   }
 }
