@@ -13,10 +13,16 @@ Live demo: https://ali1129js.github.io/buildrig-app/
 - Build table with every part, model, and price
 - Saved builds in local storage, with optional names (default "Build 1", "Build 2", and so on, never reused)
 - Confirmation before deleting a build, clearing all saved builds, or resetting the current build
+- Load example build: six ready-made builds for different purposes (4K gaming, budget gaming, coding, local AI, content creation, compact and quiet). Loading replaces only the calculator, asks first if it has data, and never touches saved builds
+- "Coming 2027 (rumoured)" info section with sources and no prices
 - Three themes: light, dark, and high contrast (saved per browser)
 - Prices stored as integer cents and shown as de-DE euros, for example `1.234,56 €`
 - Accessible: labelled fields, visible focus, live status messages, reduced motion support
 - No tracking, no external requests, system font stack
+
+## Example builds and prices
+
+The example builds live in `src/lib/presets.ts` and the rumoured hardware in `src/lib/rumours.ts`. Prices are German retail prices as of Oct 2026 (a period of very high memory, SSD and GPU prices), so check retailers before buying. The research with sources and dates is in `buildrig-research.md` (kept next to the project, not in the app). Presets are validated by tests: all categories valid, integer cents, and fixed totals.
 
 ## Stack
 

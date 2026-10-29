@@ -98,6 +98,58 @@ for (const theme of ["light", "dark", "contrast"]) {
 }
 await page.reload();
 check("theme persists after reload", (await page.getAttribute("html", "data-theme")) === "contrast");
+
+// Example builds: preview, confirm when the build has data, saved builds untouched.
+const savedBefore = await page.locator(".saved-card").count();
+check("load button is disabled until an example is chosen", await page.locator("#loadPresetBtn").isDisabled());
+await page.selectOption("#presetSelect", "gaming-4k");
+check("preview shows purpose, total and price note", await (async () => {
+  const text = (await page.textContent("#presetInfo"))?.replace(/\s/g, " ") ?? "";
+  return text.includes("High-end gaming at 4K") && text.includes("4.406,70 €") && text.includes("Prices as of Oct 2026, check retailers.");
+})());
+check("preview alone does not change the build", (await page.textContent("#filledCount")) === "0");
+await page.click("#loadPresetBtn");
+check("empty build loads without a confirm dialog", (await page.locator("dialog.confirm").count()) === 0 && (await page.textContent("#filledCount")) === "11");
+check("total is 4.406,70 €", (await page.textContent("#totalAmount"))?.replace(/\s/g, " ") === "4.406,70 €");
+check("status mentions the price note", (await page.textContent("#status"))?.includes("Prices as of Oct 2026, check retailers.") === true);
+check("saved builds untouched after load", (await page.locator(".saved-card").count()) === savedBefore);
+
+await page.selectOption("#presetSelect", "compact-quiet");
+await page.click("#loadPresetBtn");
+check("confirm dialog opens when the build has data", await page.locator("dialog.confirm[open]").isVisible());
+await page.locator("dialog.confirm").getByRole("button", { name: "Cancel" }).click();
+await page.waitForFunction(() => document.querySelectorAll("dialog.confirm").length === 0);
+check("cancel keeps the current build", (await page.textContent("#totalAmount"))?.replace(/\s/g, " ") === "4.406,70 €");
+await page.click("#loadPresetBtn");
+await page.locator("dialog.confirm").getByRole("button", { name: "Load example" }).click();
+await page.waitForFunction(() => document.getElementById("totalAmount")?.textContent?.includes("1.127,55"));
+check("confirm replaces the build", (await page.textContent("#filledCount")) === "9");
+check("saved builds still untouched", (await page.locator(".saved-card").count()) === savedBefore);
+check("saved storage unchanged by loading", await page.evaluate((n) => JSON.parse(localStorage.getItem("buildrig.savedBuilds.v2") ?? "{}").builds?.length === n, savedBefore));
+
+for (const preset of ["gaming-budget", "dev-workstation", "local-ai", "content-creation"]) {
+  await page.selectOption("#presetSelect", preset);
+  await page.click("#loadPresetBtn");
+  await page.locator("dialog.confirm").getByRole("button", { name: "Load example" }).click();
+  await page.waitForFunction(() => document.querySelectorAll("dialog.confirm").length === 0);
+}
+await page.selectOption("#presetSelect", "gaming-4k");
+await page.click("#loadPresetBtn");
+await page.locator("dialog.confirm").getByRole("button", { name: "Load example" }).click();
+await page.waitForFunction(() => document.getElementById("totalAmount")?.textContent?.includes("4.406,70"));
+await page.locator(".rumours-panel details").evaluate((d) => (d.open = true));
+check("rumours section is labelled rumoured and has no euro amounts", await (async () => {
+  const text = (await page.textContent(".rumours-panel")) ?? "";
+  return text.includes("Coming 2027 (rumoured)") && text.includes("Rumoured") && !text.includes("€");
+})());
+check("no em or en dashes in page text", !/[\u2013\u2014]/.test((await page.textContent("body")) ?? ""));
+for (const theme of ["dark", "light", "contrast"]) {
+  await page.selectOption("#themeSelect", theme);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(250);
+  await page.screenshot({ path: `${outDir}/preset-loaded-${theme}.png`, fullPage: true });
+}
+
 const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
 const mp = await mobile.newPage();
 await mp.goto(url);

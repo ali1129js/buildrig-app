@@ -46,6 +46,23 @@
           </div>
         </div>
 
+        <section class="panel examples" aria-labelledby="examplesTitle">
+          <div class="section-title">
+            <div>
+              <h3 id="examplesTitle">Load example build</h3>
+              <p class="muted">Start from a ready-made build for a specific purpose. Prices as of Oct 2026, check retailers.</p>
+            </div>
+          </div>
+          <div class="examples-controls">
+            <div class="field">
+              <label for="presetSelect">Example build</label>
+              <select id="presetSelect"></select>
+            </div>
+            <button class="btn btn-primary" type="button" id="loadPresetBtn" disabled>Load into calculator</button>
+          </div>
+          <div class="preset-info" id="presetInfo"></div>
+        </section>
+
         <div class="dashboard">
           <section class="panel" aria-labelledby="formTitle">
             <div class="section-title">
@@ -145,6 +162,14 @@
             <div class="saved-list" id="savedBuildsList"></div>
           </section>
         </div>
+
+        <section class="panel rumours-panel" aria-labelledby="rumoursTitle">
+          <details>
+            <summary id="rumoursTitle">Coming 2027 (rumoured)</summary>
+            <p class="muted" id="rumourNote"></p>
+            <ul class="rumour-list" id="rumoursList"></ul>
+          </details>
+        </section>
       </main>
     </div>
     <script type="module" src="/src/main.ts"></script>

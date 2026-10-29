@@ -16,8 +16,10 @@ import {
   type SavedState,
   type Theme
 } from "./lib/storage";
+import { getPreset, PRESETS, PRICE_NOTE, presetToBuild, presetTotalCents } from "./lib/presets";
 import { confirmAction } from "./ui/confirm";
 import { byId, el } from "./ui/dom";
+import { renderPresetInfo, renderRumours } from "./ui/examples";
 import { renderNav, renderSavedBuilds, renderTable } from "./ui/render";
 
 /** Storage can throw just by being accessed (blocked cookies), so resolve it defensively. */
@@ -55,6 +57,9 @@ const status = byId("status", HTMLElement);
 const savedList = byId("savedBuildsList", HTMLElement);
 const buildNameInput = byId("buildNameInput", HTMLInputElement);
 const themeSelect = byId("themeSelect", HTMLSelectElement);
+const presetSelect = byId("presetSelect", HTMLSelectElement);
+const loadPresetBtn = byId("loadPresetBtn", HTMLButtonElement);
+const presetInfo = byId("presetInfo", HTMLElement);
 
 let build: Build = emptyBuild();
 let activePart: PartName = "CPU";
@@ -156,6 +161,30 @@ componentSelect.addEventListener("change", () => {
   if (isPartName(componentSelect.value)) selectPart(componentSelect.value, false);
 });
 
+function showPresetInfo(): void {
+  const preset = getPreset(presetSelect.value);
+  loadPresetBtn.disabled = preset === undefined;
+  renderPresetInfo(presetInfo, preset);
+}
+
+presetSelect.addEventListener("change", showPresetInfo);
+
+loadPresetBtn.addEventListener("click", async () => {
+  const preset = getPreset(presetSelect.value);
+  if (!preset) return;
+  if (filledParts(build).length > 0) {
+    const ok = await confirmAction({
+      title: "Replace the current build?",
+      message: `Loading "${preset.name}" replaces the parts in the calculator. Saved builds are not affected.`,
+      confirmLabel: "Load example"
+    });
+    if (!ok) return;
+  }
+  build = presetToBuild(preset);
+  selectPart("CPU", false);
+  say(`Loaded the example "${preset.name}" (${formatCents(presetTotalCents(preset))}). Your saved builds are untouched. ${PRICE_NOTE}`);
+});
+
 byId("resetBtn", HTMLButtonElement).addEventListener("click", async () => {
   if (filledParts(build).length > 0) {
     const ok = await confirmAction({
@@ -214,6 +243,10 @@ themeSelect.addEventListener("change", () => {
   }
 });
 
+presetSelect.append(el("option", { value: "" }, "Choose an example..."));
+for (const preset of PRESETS) presetSelect.append(el("option", { value: preset.id }, `${preset.name} (${formatCents(presetTotalCents(preset))})`));
+showPresetInfo();
+renderRumours(byId("rumourNote", HTMLElement), byId("rumoursList", HTMLElement));
 for (const part of PARTS) componentSelect.append(el("option", { value: part }, part));
 applyTheme(loadTheme(storage, window.matchMedia("(prefers-color-scheme: dark)").matches));
 selectPart("CPU", false);
