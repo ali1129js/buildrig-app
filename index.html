@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="BuildRig is a free PC build cost planner. Add parts, see your running total, and save builds in your browser." />
     <title>BuildRig | PC build cost planner</title>
-    <script type="module" crossorigin src="./assets/index-CkIOZvMX.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-DvoP87Em.css">
+    <script type="module" crossorigin src="./assets/index-jsGybEdn.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-B69BIezx.css">
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to the build form</a>
@@ -52,7 +52,7 @@
           <div class="section-title">
             <div>
               <h3 id="examplesTitle">Load example build</h3>
-              <p class="muted">Start from a ready-made build for a specific purpose. Prices as of Oct 2026, check retailers.</p>
+              <p class="muted">Start from a ready-made build for a specific purpose. <span id="priceNote"></span></p>
             </div>
           </div>
           <div class="examples-controls">
@@ -131,16 +131,16 @@
             </div>
 
             <div class="table-wrap" role="region" aria-label="Build table, scrollable" tabindex="0">
-              <table>
+              <table role="table">
                 <caption class="visually-hidden">PC build parts with model and price</caption>
-                <thead>
-                  <tr>
-                    <th scope="col">Component</th>
-                    <th scope="col">Model</th>
-                    <th scope="col" class="num">Price</th>
+                <thead role="rowgroup">
+                  <tr role="row">
+                    <th scope="col" role="columnheader">Component</th>
+                    <th scope="col" role="columnheader">Model</th>
+                    <th scope="col" class="num" role="columnheader">Price</th>
                   </tr>
                 </thead>
-                <tbody id="partsTableBody"></tbody>
+                <tbody id="partsTableBody" role="rowgroup"></tbody>
               </table>
             </div>
             <p class="footer-note">Tip: use Extra 1 and Extra 2 for a keyboard, fans, accessories, or shipping.</p>
