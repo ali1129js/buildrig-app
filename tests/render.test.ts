@@ -50,3 +50,17 @@ describe("rendering never injects user strings as HTML", () => {
     expect(nav.querySelectorAll("button")).toHaveLength(12);
   });
 });
+
+describe("build table semantics", () => {
+  it("gives each row a row header, a model cell and a right-aligned price cell", () => {
+    const body = document.createElement("tbody");
+    renderTable(body, emptyBuild());
+    const rows = body.querySelectorAll("tr");
+    expect(rows).toHaveLength(12);
+    for (const row of rows) {
+      expect(row.querySelector("th[scope=row]")).not.toBeNull();
+      expect(row.querySelectorAll("td")).toHaveLength(2);
+      expect(row.querySelector("td.num")).not.toBeNull();
+    }
+  });
+});

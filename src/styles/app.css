@@ -262,7 +262,7 @@ main {
 
 .dashboard {
   display: grid;
-  grid-template-columns: minmax(320px, 480px) minmax(0, 1fr);
+  grid-template-columns: minmax(320px, 440px) minmax(0, 1fr);
   gap: var(--space-6);
 }
 
@@ -392,6 +392,7 @@ main {
   overflow-x: auto;
   border: 1px solid var(--table-border);
   border-radius: var(--radius-lg);
+  background: var(--table-bg);
 }
 
 table {
@@ -399,25 +400,41 @@ table {
   border-collapse: collapse;
   background: var(--table-bg);
   color: var(--table-text);
+  font-size: 1rem;
+  line-height: 1.4;
 }
 
 th {
   background: var(--table-head-bg);
   color: var(--table-head-text);
   text-align: left;
-  padding: 0.9rem 1rem;
-  font-size: var(--text-sm);
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 td,
 tbody th {
-  padding: 0.85rem 1rem;
+  padding: 0.8rem 1rem;
   border-top: 1px solid var(--table-border);
-  font-weight: 700;
   text-align: left;
+  vertical-align: top;
   background: transparent;
   color: var(--table-text);
-  font-size: var(--text-base);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+tbody th {
+  width: 9rem;
+  font-weight: 700;
+}
+
+td:nth-child(2) {
+  min-width: 11rem;
+  overflow-wrap: break-word;
+  word-break: normal;
 }
 
 tbody tr:nth-child(even) {
@@ -426,9 +443,14 @@ tbody tr:nth-child(even) {
 
 th.num,
 td.num {
+  width: 7.5rem;
   text-align: right;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
+}
+
+td.num {
+  font-weight: 700;
 }
 
 td.empty {
@@ -746,9 +768,78 @@ dialog.confirm p {
   }
 }
 
-/* Stack the calculator and the table before the table column gets too narrow for the total. */
-@media (max-width: 1100px) {
+/* Stack the calculator and the table before the table column gets too narrow to read. */
+@media (max-width: 1300px) {
   .dashboard {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Phones: each part becomes a card with the price beside the component and the model below. */
+@media (max-width: 640px) {
+  .table-wrap {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  table,
+  tbody {
+    display: block;
+    background: transparent;
+  }
+
+  thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: var(--space-3);
+    row-gap: 0.25rem;
+    padding: 0.8rem 1rem;
+    margin-bottom: var(--space-3);
+    border: 1px solid var(--table-border);
+    border-radius: var(--radius-lg);
+    background: var(--table-bg);
+  }
+
+  tbody tr:nth-child(even) {
+    background: var(--table-alt);
+  }
+
+  td,
+  tbody th {
+    display: block;
+    width: auto;
+    min-width: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  tbody th {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: 0.9rem;
+  }
+
+  td.num {
+    grid-column: 2;
+    grid-row: 1;
+    width: auto;
+  }
+
+  td:nth-child(2) {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    min-width: 0;
+    font-size: 1.05rem;
   }
 }
