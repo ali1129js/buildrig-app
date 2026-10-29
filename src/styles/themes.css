@@ -1,0 +1,97 @@
+/* Theme tokens. Only opaque hex colours here so tests/contrast.test.ts can check every pair. */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface-2: #f0ede6;
+  --border: #7d7a70;
+  --text: #28251d;
+  --muted: #55534d;
+  --primary: #01696f;
+  --primary-hover: #0c4e54;
+  --on-primary: #ffffff;
+  --secondary: #f0b400;
+  --secondary-hover: #d9a200;
+  --on-secondary: #1d1700;
+  --accent: #f1b3cb;
+  --on-accent: #220713;
+  --field-bg: #ffffff;
+  --field-text: #28251d;
+  --placeholder: #66645e;
+  --table-bg: #ffffff;
+  --table-text: #28251d;
+  --table-alt: #eef2f3;
+  --table-head-bg: #01696f;
+  --table-head-text: #ffffff;
+  --table-border: #b9b5aa;
+  --tab-active: #d9eceb;
+  --banner-bg: #dcefe2;
+  --banner-text: #12331c;
+  --focus: #7a39bb;
+  --shadow: 0 6px 18px rgba(40, 37, 29, 0.1);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0f235f;
+  --surface: #18306e;
+  --surface-2: #213c82;
+  --border: #8fa6e0;
+  --text: #eff4ff;
+  --muted: #c3d0f2;
+  --primary: #2ec27e;
+  --primary-hover: #52d696;
+  --on-primary: #04170d;
+  --secondary: #f4b400;
+  --secondary-hover: #ffc929;
+  --on-secondary: #19233f;
+  --accent: #e588ad;
+  --on-accent: #220713;
+  --field-bg: #0b1a47;
+  --field-text: #eff4ff;
+  --placeholder: #a9b9e6;
+  --table-bg: #152b66;
+  --table-text: #eff4ff;
+  --table-alt: #1c3578;
+  --table-head-bg: #2d4f9f;
+  --table-head-text: #ffffff;
+  --table-border: #4a67b3;
+  --tab-active: #2c4d9c;
+  --banner-bg: #134a37;
+  --banner-text: #e8fff3;
+  --focus: #ffd24a;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+[data-theme="contrast"] {
+  color-scheme: dark;
+  --bg: #000000;
+  --surface: #000000;
+  --surface-2: #121212;
+  --border: #ffffff;
+  --text: #ffffff;
+  --muted: #e6e6e6;
+  --primary: #ffd400;
+  --primary-hover: #ffe45c;
+  --on-primary: #000000;
+  --secondary: #00e5ff;
+  --secondary-hover: #7af2ff;
+  --on-secondary: #000000;
+  --accent: #ffffff;
+  --on-accent: #000000;
+  --field-bg: #000000;
+  --field-text: #ffffff;
+  --placeholder: #c8c8c8;
+  --table-bg: #000000;
+  --table-text: #ffffff;
+  --table-alt: #1a1a1a;
+  --table-head-bg: #ffffff;
+  --table-head-text: #000000;
+  --table-border: #ffffff;
+  --tab-active: #2b2b2b;
+  --banner-bg: #003a00;
+  --banner-text: #ffffff;
+  --focus: #00e5ff;
+  --shadow: none;
+}
