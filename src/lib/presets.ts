@@ -41,7 +41,7 @@ export const PRESETS: readonly Preset[] = [
       CPU: part("AMD Ryzen 7 9850X3D", 43720),
       Motherboard: part("MSI MAG B850 Tomahawk WiFi", 21763),
       RAM: part("Kingston Fury Beast RGB 32GB DDR5-6000 CL30", 59500),
-      GPU: part("Zotac GeForce RTX 5080 Solid Core OC 16GB", 194999),
+      GPU: part("Gainward GeForce RTX 5080 Phoenix GS V1 16GB", 186100),
       "Primary SSD": part("Samsung 990 Pro 2TB", 38174),
       Case: part("Fractal Design North XL TG Dark", 16253),
       "Power Supply": part("Corsair RM1000x SHIFT 1000W", 16980),

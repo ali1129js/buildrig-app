@@ -105,12 +105,12 @@ check("load button is disabled until an example is chosen", await page.locator("
 await page.selectOption("#presetSelect", "gaming-4k");
 check("preview shows purpose, total and price note", await (async () => {
   const text = (await page.textContent("#presetInfo"))?.replace(/\s/g, " ") ?? "";
-  return text.includes("High-end gaming at 4K") && text.includes("4.785,12 €") && /Prices as of \w+ \d{4}, check retailers\./.test(text);
+  return text.includes("High-end gaming at 4K") && text.includes("4.696,13 €") && /Prices as of \w+ \d{4}, check retailers\./.test(text);
 })());
 check("preview alone does not change the build", (await page.textContent("#filledCount")) === "0");
 await page.click("#loadPresetBtn");
 check("empty build loads without a confirm dialog", (await page.locator("dialog.confirm").count()) === 0 && (await page.textContent("#filledCount")) === "11");
-check("total is 4.785,12 €", (await page.textContent("#totalAmount"))?.replace(/\s/g, " ") === "4.785,12 €");
+check("total is 4.696,13 €", (await page.textContent("#totalAmount"))?.replace(/\s/g, " ") === "4.696,13 €");
 check("status mentions the price note", /Prices as of \w+ \d{4}, check retailers\./.test((await page.textContent("#status")) ?? ""));
 check("saved builds untouched after load", (await page.locator(".saved-card").count()) === savedBefore);
 
@@ -119,7 +119,7 @@ await page.click("#loadPresetBtn");
 check("confirm dialog opens when the build has data", await page.locator("dialog.confirm[open]").isVisible());
 await page.locator("dialog.confirm").getByRole("button", { name: "Cancel" }).click();
 await page.waitForFunction(() => document.querySelectorAll("dialog.confirm").length === 0);
-check("cancel keeps the current build", (await page.textContent("#totalAmount"))?.replace(/\s/g, " ") === "4.785,12 €");
+check("cancel keeps the current build", (await page.textContent("#totalAmount"))?.replace(/\s/g, " ") === "4.696,13 €");
 await page.click("#loadPresetBtn");
 await page.locator("dialog.confirm").getByRole("button", { name: "Load example" }).click();
 await page.waitForFunction(() => document.getElementById("totalAmount")?.textContent?.includes("1.126,83"));
@@ -136,7 +136,7 @@ for (const preset of ["gaming-budget", "dev-workstation", "local-ai", "content-c
 await page.selectOption("#presetSelect", "gaming-4k");
 await page.click("#loadPresetBtn");
 await page.locator("dialog.confirm").getByRole("button", { name: "Load example" }).click();
-await page.waitForFunction(() => document.getElementById("totalAmount")?.textContent?.includes("4.785,12"));
+await page.waitForFunction(() => document.getElementById("totalAmount")?.textContent?.includes("4.696,13"));
 await page.locator(".rumours-panel details").evaluate((d) => (d.open = true));
 check("rumours section is labelled rumoured and has no euro amounts", await (async () => {
   const text = (await page.textContent(".rumours-panel")) ?? "";
