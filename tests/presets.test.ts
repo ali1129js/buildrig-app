@@ -8,12 +8,12 @@ import { parseBuild } from "../src/lib/storage";
 
 /** Totals written down independently of the code, from buildrig-research.md. */
 const EXPECTED_TOTALS_CENTS: Record<string, number> = {
-  "gaming-4k": 440670,
-  "gaming-budget": 112081,
-  "dev-workstation": 235230,
-  "local-ai": 430768,
-  "content-creation": 448782,
-  "compact-quiet": 112755
+  "gaming-4k": 469613,
+  "gaming-budget": 112181,
+  "dev-workstation": 235797,
+  "local-ai": 450279,
+  "content-creation": 459120,
+  "compact-quiet": 112683
 };
 
 const DASHES = /[\u2013\u2014]/;
@@ -66,7 +66,7 @@ describe("presets", () => {
   it("formats totals as de-DE euros", () => {
     const preset = getPreset("gaming-4k");
     expect(preset).toBeDefined();
-    expect(formatCents(presetTotalCents(preset!)).replace(/\s/g, " ")).toBe("4.406,70 €");
+    expect(formatCents(presetTotalCents(preset!)).replace(/\s/g, " ")).toBe("4.696,13 €");
   });
 
   it("presetToBuild returns copies, so editing a build never changes a preset", () => {

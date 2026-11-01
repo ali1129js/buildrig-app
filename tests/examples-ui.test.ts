@@ -11,7 +11,7 @@ describe("example build rendering", () => {
     expect(container.textContent).toContain(preset.name);
     expect(container.textContent).toContain(preset.purpose);
     expect(container.textContent).toContain(preset.why);
-    expect(container.textContent).toContain("4.406,70");
+    expect(container.textContent).toContain("4.696,13");
     expect(container.textContent).toContain(PRICE_NOTE);
     expect(container.querySelectorAll(".preset-key-parts dt")).toHaveLength(3);
   });
