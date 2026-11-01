@@ -9,7 +9,7 @@ export interface Rumour {
 /** Shown as a label above the list. These are reports and leaks, not announcements. */
 export const RUMOUR_NOTE = "Rumoured, not confirmed. Dates and specs can change. No prices are known.";
 
-/** Reported upcoming hardware, researched 29 Oct 2026. Details in buildrig-research.md. */
+/** Reported upcoming hardware, researched 29 Oct 2026, rechecked 1 Nov 2026. Details in buildrig-research.md. */
 export const RUMOURS: readonly Rumour[] = [
   {
     id: "zen6",
@@ -32,8 +32,11 @@ export const RUMOURS: readonly Rumour[] = [
   {
     id: "rtx50-super",
     title: "NVIDIA RTX 50 Super refresh",
-    summary: "Reportedly delayed or on hold because of GDDR7 and memory costs. It may still arrive late 2026 or in 2027. Not confirmed by NVIDIA.",
-    sources: [{ label: "TrendForce", url: "https://www.trendforce.com/news/2026/10/29/insights-nvidia-rtx-60-may-slip-to-2028-amd-rdna-5-also-in-question-why-are-gaming-gpu-cycles-slowing/" }]
+    summary: "Reportedly delayed or on hold because of GDDR7 and memory costs. Newer reports say a 24 GB RTX 5080 may replace the 16 GB card in early 2027 instead. Not confirmed by NVIDIA.",
+    sources: [
+      { label: "TrendForce", url: "https://www.trendforce.com/news/2026/10/29/insights-nvidia-rtx-60-may-slip-to-2028-amd-rdna-5-also-in-question-why-are-gaming-gpu-cycles-slowing/" },
+      { label: "PC Gamer", url: "https://www.pcgamer.com/hardware/graphics-cards/schrodingers-gpu-set-for-an-early-2027-release-as-the-dead-alive-24-gb-rtx-5080-super-box-is-shaken-once-more/" }
+    ]
   },
   {
     id: "rtx60",
