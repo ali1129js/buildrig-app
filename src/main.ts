@@ -20,7 +20,7 @@ import { getPreset, PRESETS, PRICE_NOTE, presetToBuild, presetTotalCents } from 
 import { confirmAction } from "./ui/confirm";
 import { byId, el } from "./ui/dom";
 import { renderPresetInfo, renderRumours } from "./ui/examples";
-import { renderNav, renderSavedBuilds, renderTable } from "./ui/render";
+import { renderCompare, renderNav, renderSavedBuilds, renderTable } from "./ui/render";
 
 /** Storage can throw just by being accessed (blocked cookies), so resolve it defensively. */
 function getStorage(): Storage | null {
@@ -55,6 +55,7 @@ const averagePrice = byId("averagePrice", HTMLElement);
 const remainingCount = byId("remainingCount", HTMLElement);
 const status = byId("status", HTMLElement);
 const savedList = byId("savedBuildsList", HTMLElement);
+const compareRoot = byId("compareBuilds", HTMLElement);
 const buildNameInput = byId("buildNameInput", HTMLInputElement);
 const themeSelect = byId("themeSelect", HTMLSelectElement);
 const presetSelect = byId("presetSelect", HTMLSelectElement);
@@ -66,6 +67,8 @@ let build: Build = emptyBuild();
 let activePart: PartName = "CPU";
 const loaded = loadState(storage);
 let saved: SavedState = loaded.state;
+let compareLeftId: string | null = null;
+let compareRightId: string | null = null;
 
 function say(message: string): void {
   status.replaceChildren(el("span", {}, message));
@@ -88,8 +91,35 @@ function renderAll(): void {
   renderTable(tableBody, build);
 }
 
+function syncCompareIds(): { leftId: string | null; rightId: string | null } {
+  const ids = saved.builds.map((item) => item.id);
+  if (ids.length < 2) {
+    compareLeftId = null;
+    compareRightId = null;
+    return { leftId: null, rightId: null };
+  }
+  if (!compareLeftId || !ids.includes(compareLeftId)) compareLeftId = ids[0]!;
+  if (!compareRightId || !ids.includes(compareRightId)) {
+    compareRightId = ids.find((id) => id !== compareLeftId) ?? ids[1]!;
+  }
+  return { leftId: compareLeftId, rightId: compareRightId };
+}
+
+function paintCompare(): void {
+  const { leftId, rightId } = syncCompareIds();
+  renderCompare(compareRoot, saved.builds, leftId, rightId, {
+    onChange: (left, right) => {
+      compareLeftId = left;
+      compareRightId = right;
+      paintCompare();
+    },
+    onLoad: loadBuild
+  });
+}
+
 function renderSaved(): void {
   renderSavedBuilds(savedList, saved.builds, { onLoad: loadBuild, onDelete: deleteBuild });
+  paintCompare();
   buildNameInput.placeholder = `Default: ${defaultName(saved)}`;
 }
 

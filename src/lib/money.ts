@@ -28,3 +28,10 @@ export function centsToInputValue(cents: number): string {
   const fraction = cents % 100;
   return fraction === 0 ? String(whole) : `${whole},${String(fraction).padStart(2, "0")}`;
 }
+
+/** Signed de-DE euros for a price difference. Positive means the right-hand build costs more. */
+export function formatDeltaCents(cents: number): string {
+  if (cents === 0) return formatCents(0);
+  const sign = cents > 0 ? "+" : "−";
+  return `${sign}${formatCents(Math.abs(cents))}`;
+}

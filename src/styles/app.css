@@ -843,3 +843,40 @@ dialog.confirm p {
     font-size: 1.05rem;
   }
 }
+
+.compare {
+  margin-top: var(--space-6);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.compare-title {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+
+.compare-pickers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+}
+
+.compare-hint {
+  margin: var(--space-4) 0 0;
+}
+
+.compare-wrap {
+  overflow-x: auto;
+}
+
+.compare-table {
+  min-width: 40rem;
+}
+
+.compare-empty {
+  color: var(--muted);
+}
+
+.compare .saved-card-actions {
+  margin-top: var(--space-2);
+}

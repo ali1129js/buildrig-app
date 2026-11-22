@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { centsToInputValue, formatCents, parsePriceToCents } from "../src/lib/money";
+import { centsToInputValue, formatCents, formatDeltaCents, parsePriceToCents } from "../src/lib/money";
 
 const NBSP = "\u00a0";
 
@@ -43,5 +43,13 @@ describe("centsToInputValue", () => {
       expect(parsePriceToCents(centsToInputValue(cents))).toBe(cents);
     }
     expect(centsToInputValue(0)).toBe("");
+  });
+});
+
+describe("formatDeltaCents", () => {
+  it("shows a plus for a higher right-hand total, a minus for a lower one, and no sign for zero", () => {
+    expect(formatDeltaCents(0)).toBe(`0,00${NBSP}€`);
+    expect(formatDeltaCents(1250)).toBe(`+12,50${NBSP}€`);
+    expect(formatDeltaCents(-1250)).toBe(`−12,50${NBSP}€`);
   });
 });

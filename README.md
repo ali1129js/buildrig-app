@@ -12,6 +12,7 @@ Live demo: https://ali1129js.github.io/buildrig-app/
 - Live total, parts filled, average per part, and parts still empty
 - Build table with every part, model, and price
 - Saved builds in local storage, with optional names (default "Build 1", "Build 2", and so on, never reused)
+- Compare two saved builds side by side: each part's model and price, plus a total delta (B minus A). Choosing builds does not change the calculator until you load one
 - Confirmation before deleting a build, clearing all saved builds, or resetting the current build
 - Load example build: six ready-made builds for different purposes (4K gaming, budget gaming, coding, local AI, content creation, compact and quiet). Loading replaces only the calculator, asks first if it has data, and never touches saved builds
 - "Coming 2027 (rumoured)" info section with sources and no prices
