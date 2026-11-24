@@ -31,6 +31,8 @@ The example builds live in `src/lib/presets.ts` and the rumoured hardware in `sr
 - Vanilla DOM code, no runtime dependencies
 - Vitest for unit tests (including a contrast check for every theme)
 
+See [docs/LEARN.md](docs/LEARN.md) for why prices are integer cents, how v1 saved builds migrate to v2, and why destructive actions go through a confirm dialog.
+
 ## Run it
 
 ```bash
