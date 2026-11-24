@@ -17,6 +17,7 @@ import {
   type Theme
 } from "./lib/storage";
 import { getPreset, PRESETS, PRICE_NOTE, presetToBuild, presetTotalCents } from "./lib/presets";
+import { applyImport, exportFilename, serializeExport } from "./lib/transfer";
 import { confirmAction } from "./ui/confirm";
 import { byId, el } from "./ui/dom";
 import { renderPresetInfo, renderRumours } from "./ui/examples";
@@ -260,6 +261,41 @@ byId("clearSavedBtn", HTMLButtonElement).addEventListener("click", async () => {
   });
   if (!ok) return;
   persist(clearBuilds(saved), "All saved builds were cleared from local storage.");
+});
+
+function downloadJson(filename: string, contents: string): void {
+  const blob = new Blob([contents], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = el("a", { href: url, download: filename });
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+byId("exportBtn", HTMLButtonElement).addEventListener("click", () => {
+  downloadJson(exportFilename(), serializeExport(saved));
+  const count = saved.builds.length;
+  say(`Exported ${count} ${count === 1 ? "build" : "builds"} as JSON.`);
+});
+
+const importFile = byId("importFile", HTMLInputElement);
+byId("importBtn", HTMLButtonElement).addEventListener("click", () => {
+  importFile.value = "";
+  importFile.click();
+});
+importFile.addEventListener("change", async () => {
+  const file = importFile.files?.[0];
+  importFile.value = "";
+  if (!file) return;
+  let raw: string;
+  try {
+    raw = await file.text();
+  } catch {
+    say("This file could not be read.");
+    return;
+  }
+  const result = await applyImport(raw, saved, confirmAction);
+  if (result.accepted) persist(result.state, result.message);
+  else say(result.message);
 });
 
 function applyTheme(theme: Theme): void {
