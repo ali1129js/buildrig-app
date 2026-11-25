@@ -1,97 +1,102 @@
-/* Theme tokens. Only opaque hex colours here so tests/contrast.test.ts can check every pair. */
-:root,
-[data-theme="light"] {
+/* Theme tokens. Only opaque hex colours here so tests/contrast.test.ts can check every pair.
+ * There is no high-contrast theme. A saved contrast choice maps to Graphite in storage.ts.
+ * :root and [data-theme] have the same specificity, so the khaki block is
+ * :root:not([data-theme]), [data-theme="khaki"] so a later theme cannot leak onto an unset root.
+ * Keep one declaration per line: the test parses this file.
+ */
+:root:not([data-theme]),
+[data-theme="khaki"] {
   color-scheme: light;
-  --bg: #f7f6f2;
-  --surface: #ffffff;
-  --surface-2: #f0ede6;
-  --border: #7d7a70;
-  --text: #28251d;
-  --muted: #55534d;
+  --bg: #d8cdae;
+  --surface: #ebe4d0;
+  --surface-2: #e3dcc6;
+  --border: #6f6550;
+  --text: #2a2418;
+  --muted: #554c3e;
   --primary: #01696f;
   --primary-hover: #0c4e54;
   --on-primary: #ffffff;
-  --secondary: #f0b400;
-  --secondary-hover: #d9a200;
+  --secondary: #c9a227;
+  --secondary-hover: #a8871a;
   --on-secondary: #1d1700;
-  --accent: #f1b3cb;
-  --on-accent: #220713;
-  --field-bg: #ffffff;
-  --field-text: #28251d;
-  --placeholder: #66645e;
-  --table-bg: #ffffff;
-  --table-text: #28251d;
-  --table-alt: #eef2f3;
+  --accent: #8a3050;
+  --on-accent: #ffffff;
+  --field-bg: #f7f1de;
+  --field-text: #2a2418;
+  --placeholder: #554c3e;
+  --table-bg: #ebe4d0;
+  --table-text: #2a2418;
+  --table-alt: #e0d8c0;
   --table-head-bg: #01696f;
   --table-head-text: #ffffff;
-  --table-border: #878378;
-  --tab-active: #d9eceb;
-  --banner-bg: #dcefe2;
+  --table-border: #6f6550;
+  --tab-active: #cfc6a8;
+  --banner-bg: #cfe6d4;
   --banner-text: #12331c;
-  --focus: #7a39bb;
-  --shadow: 0 6px 18px rgba(40, 37, 29, 0.1);
+  --focus: #214bb3;
+  --shadow: 0 6px 18px rgba(42, 36, 24, 0.12);
 }
 
-[data-theme="dark"] {
+[data-theme="graphite"] {
   color-scheme: dark;
-  --bg: #0f235f;
-  --surface: #18306e;
-  --surface-2: #213c82;
-  --border: #8fa6e0;
-  --text: #eff4ff;
-  --muted: #c3d0f2;
-  --primary: #2ec27e;
-  --primary-hover: #52d696;
+  --bg: #1e2329;
+  --surface: #2a313a;
+  --surface-2: #343d48;
+  --border: #8a95a5;
+  --text: #e8ecf1;
+  --muted: #a7b0bc;
+  --primary: #3dd68e;
+  --primary-hover: #5ee0a2;
   --on-primary: #04170d;
   --secondary: #f4b400;
   --secondary-hover: #ffc929;
   --on-secondary: #19233f;
   --accent: #e588ad;
   --on-accent: #220713;
-  --field-bg: #0b1a47;
-  --field-text: #eff4ff;
-  --placeholder: #a9b9e6;
-  --table-bg: #152b66;
-  --table-text: #eff4ff;
-  --table-alt: #1c3578;
-  --table-head-bg: #2d4f9f;
+  --field-bg: #151a20;
+  --field-text: #e8ecf1;
+  --placeholder: #a7b0bc;
+  --table-bg: #2a313a;
+  --table-text: #e8ecf1;
+  --table-alt: #343d48;
+  --table-head-bg: #1a6b4a;
   --table-head-text: #ffffff;
-  --table-border: #6d8bd8;
-  --tab-active: #2c4d9c;
+  --table-border: #8a95a5;
+  --tab-active: #3a4450;
   --banner-bg: #134a37;
   --banner-text: #e8fff3;
-  --focus: #ffd24a;
+  --focus: #8daeff;
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
 }
 
-[data-theme="contrast"] {
+[data-theme="midnight"] {
   color-scheme: dark;
-  --bg: #000000;
-  --surface: #000000;
-  --surface-2: #121212;
-  --border: #ffffff;
-  --text: #ffffff;
-  --muted: #e6e6e6;
-  --primary: #ffd400;
-  --primary-hover: #ffe45c;
-  --on-primary: #000000;
-  --secondary: #00e5ff;
-  --secondary-hover: #7af2ff;
-  --on-secondary: #000000;
-  --accent: #ffffff;
-  --on-accent: #000000;
-  --field-bg: #000000;
-  --field-text: #ffffff;
-  --placeholder: #c8c8c8;
-  --table-bg: #000000;
-  --table-text: #ffffff;
-  --table-alt: #1a1a1a;
-  --table-head-bg: #ffffff;
-  --table-head-text: #000000;
-  --table-border: #ffffff;
-  --tab-active: #2b2b2b;
-  --banner-bg: #003a00;
-  --banner-text: #ffffff;
-  --focus: #00e5ff;
-  --shadow: none;
+  --bg: #1b1428;
+  --surface: #2a2238;
+  --surface-2: #342c44;
+  --border: #8a8298;
+  --text: #ede7f6;
+  --muted: #c9c2d6;
+  --primary: #3dd68e;
+  --primary-hover: #5ee0a2;
+  --on-primary: #04170d;
+  --secondary: #f4b400;
+  --secondary-hover: #ffc929;
+  --on-secondary: #1b1428;
+  --accent: #e588ad;
+  --on-accent: #220713;
+  --field-bg: #140e1f;
+  --field-text: #ede7f6;
+  --placeholder: #c9c2d6;
+  --table-bg: #2a2238;
+  --table-text: #ede7f6;
+  --table-alt: #342c44;
+  --table-head-bg: #1a6b4a;
+  --table-head-text: #ffffff;
+  --table-border: #8a8298;
+  --tab-active: #3d3450;
+  --banner-bg: #134a37;
+  --banner-text: #e8fff3;
+  --focus: #789fff;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
 }

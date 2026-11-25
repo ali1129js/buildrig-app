@@ -1,5 +1,10 @@
 import { emptyBuild, filledParts, totalCents, type Build } from "./build";
-import { MODEL_MAX_LENGTH, NAME_MAX_LENGTH, PARTS, MAX_PRICE_CENTS } from "./parts";
+import {
+  MODEL_MAX_LENGTH,
+  NAME_MAX_LENGTH,
+  PARTS,
+  MAX_PRICE_CENTS,
+} from "./parts";
 
 export const STORAGE_KEY = "buildrig.savedBuilds.v2";
 export const LEGACY_STORAGE_KEY = "buildrig.savedBuilds.v1";
@@ -37,7 +42,12 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function isCents(value: unknown): value is number {
-  return typeof value === "number" && Number.isInteger(value) && value >= 0 && value <= MAX_PRICE_CENTS;
+  return (
+    typeof value === "number" &&
+    Number.isInteger(value) &&
+    value >= 0 &&
+    value <= MAX_PRICE_CENTS
+  );
 }
 
 export function emptyState(): SavedState {
@@ -53,7 +63,8 @@ export function parseBuild(value: unknown): Build | null {
     if (raw === undefined) continue;
     if (!isRecord(raw)) return null;
     const { model, priceCents } = raw;
-    if (typeof model !== "string" || model.length > MODEL_MAX_LENGTH) return null;
+    if (typeof model !== "string" || model.length > MODEL_MAX_LENGTH)
+      return null;
     if (!isCents(priceCents)) return null;
     build[part] = { model, priceCents };
   }
@@ -66,15 +77,23 @@ export function parseSavedBuild(value: unknown): SavedBuild | null {
   const { id, name, savedAt } = value;
   if (typeof id !== "string" || id === "" || id.length > 80) return null;
   if (typeof name !== "string" || name.length > NAME_MAX_LENGTH) return null;
-  if (typeof savedAt !== "string" || Number.isNaN(new Date(savedAt).getTime())) return null;
+  if (typeof savedAt !== "string" || Number.isNaN(new Date(savedAt).getTime()))
+    return null;
   const parts = parseBuild(value["parts"]);
   if (!parts) return null;
   return { id, name, savedAt, totalCents: totalCents(parts), parts };
 }
 
 /** Validates a whole stored state. Invalid builds are skipped and counted, duplicates by id dropped. */
-export function parseState(value: unknown): { state: SavedState; skipped: number } | null {
-  if (!isRecord(value) || value["version"] !== 2 || !Array.isArray(value["builds"])) return null;
+export function parseState(
+  value: unknown,
+): { state: SavedState; skipped: number } | null {
+  if (
+    !isRecord(value) ||
+    value["version"] !== 2 ||
+    !Array.isArray(value["builds"])
+  )
+    return null;
   const builds: SavedBuild[] = [];
   const seen = new Set<string>();
   let skipped = 0;
@@ -89,15 +108,29 @@ export function parseState(value: unknown): { state: SavedState; skipped: number
   }
   const rawNext = value["nextNumber"];
   const nextNumber =
-    typeof rawNext === "number" && Number.isInteger(rawNext) && rawNext >= 1 && rawNext < 1_000_000 ? rawNext : builds.length + 1;
-  return { state: { version: 2, nextNumber: Math.max(nextNumber, builds.length + 1), builds }, skipped };
+    typeof rawNext === "number" &&
+    Number.isInteger(rawNext) &&
+    rawNext >= 1 &&
+    rawNext < 1_000_000
+      ? rawNext
+      : builds.length + 1;
+  return {
+    state: {
+      version: 2,
+      nextNumber: Math.max(nextNumber, builds.length + 1),
+      builds,
+    },
+    skipped,
+  };
 }
 
 /**
  * Converts the v1 format (prices as euro floats, array at the top level) to the v2 state.
  * Returns null if the value is not an array.
  */
-export function migrateLegacy(value: unknown): { state: SavedState; skipped: number } | null {
+export function migrateLegacy(
+  value: unknown,
+): { state: SavedState; skipped: number } | null {
   if (!Array.isArray(value)) return null;
   const builds: SavedBuild[] = [];
   const seen = new Set<string>();
@@ -111,7 +144,10 @@ export function migrateLegacy(value: unknown): { state: SavedState; skipped: num
     seen.add(converted.id);
     builds.push(converted);
   }
-  return { state: { version: 2, nextNumber: value.length + 1, builds }, skipped };
+  return {
+    state: { version: 2, nextNumber: value.length + 1, builds },
+    skipped,
+  };
 }
 
 function convertLegacyBuild(value: unknown): SavedBuild | null {
@@ -121,17 +157,33 @@ function convertLegacyBuild(value: unknown): SavedBuild | null {
     const raw = value["parts"][part];
     if (!isRecord(raw)) continue;
     const euros = Number(raw["price"]);
-    const model = typeof raw["model"] === "string" ? raw["model"].slice(0, MODEL_MAX_LENGTH) : "";
+    const model =
+      typeof raw["model"] === "string"
+        ? raw["model"].slice(0, MODEL_MAX_LENGTH)
+        : "";
     if (!Number.isFinite(euros) || euros < 0) return null;
-    parts[part] = { model, priceCents: Math.min(Math.round(euros * 100), MAX_PRICE_CENTS) };
+    parts[part] = {
+      model,
+      priceCents: Math.min(Math.round(euros * 100), MAX_PRICE_CENTS),
+    };
   }
-  const name = typeof value["name"] === "string" ? value["name"].slice(0, NAME_MAX_LENGTH) : "Imported build";
-  return parseSavedBuild({ id: value["id"], name, savedAt: value["savedAt"], parts });
+  const name =
+    typeof value["name"] === "string"
+      ? value["name"].slice(0, NAME_MAX_LENGTH)
+      : "Imported build";
+  return parseSavedBuild({
+    id: value["id"],
+    name,
+    savedAt: value["savedAt"],
+    parts,
+  });
 }
 
 const UNREADABLE = "Saved builds were unreadable and were ignored.";
 
-function tryParseJson(raw: string): { ok: true; value: unknown } | { ok: false } {
+function tryParseJson(
+  raw: string,
+): { ok: true; value: unknown } | { ok: false } {
   try {
     return { ok: true, value: JSON.parse(raw) as unknown };
   } catch {
@@ -146,19 +198,27 @@ export function loadState(storage: StorageLike): LoadResult {
     raw = storage.getItem(STORAGE_KEY);
     if (raw === null) legacyRaw = storage.getItem(LEGACY_STORAGE_KEY);
   } catch {
-    return { state: emptyState(), skipped: 0, error: "Saved builds could not be read from this browser." };
+    return {
+      state: emptyState(),
+      skipped: 0,
+      error: "Saved builds could not be read from this browser.",
+    };
   }
 
   if (raw !== null) {
     const json = tryParseJson(raw);
     const parsed = json.ok ? parseState(json.value) : null;
-    return parsed ? { ...parsed, error: null } : { state: emptyState(), skipped: 0, error: UNREADABLE };
+    return parsed
+      ? { ...parsed, error: null }
+      : { state: emptyState(), skipped: 0, error: UNREADABLE };
   }
 
   if (legacyRaw !== null) {
     const json = tryParseJson(legacyRaw);
     const migrated = json.ok ? migrateLegacy(json.value) : null;
-    return migrated ? { ...migrated, error: null } : { state: emptyState(), skipped: 0, error: UNREADABLE };
+    return migrated
+      ? { ...migrated, error: null }
+      : { state: emptyState(), skipped: 0, error: UNREADABLE };
   }
 
   return { state: emptyState(), skipped: 0, error: null };
@@ -169,7 +229,11 @@ export function saveState(storage: StorageLike, state: SavedState): SaveResult {
     storage.setItem(STORAGE_KEY, JSON.stringify(state));
     return { ok: true };
   } catch {
-    return { ok: false, error: "This browser blocked or filled its local storage, so nothing was saved." };
+    return {
+      ok: false,
+      error:
+        "This browser blocked or filled its local storage, so nothing was saved.",
+    };
   }
 }
 
@@ -186,17 +250,25 @@ export interface AddInput {
 }
 
 /** Pure: returns a new state with the build added at the top. Returns null if no part is filled. */
-export function addBuild(state: SavedState, input: AddInput): SavedState | null {
+export function addBuild(
+  state: SavedState,
+  input: AddInput,
+): SavedState | null {
   if (filledParts(input.parts).length === 0) return null;
-  const name = input.name.trim().slice(0, NAME_MAX_LENGTH) || defaultName(state);
+  const name =
+    input.name.trim().slice(0, NAME_MAX_LENGTH) || defaultName(state);
   const saved: SavedBuild = {
     id: input.id,
     name,
     savedAt: input.savedAt,
     totalCents: totalCents(input.parts),
-    parts: input.parts
+    parts: input.parts,
   };
-  return { ...state, nextNumber: state.nextNumber + 1, builds: [saved, ...state.builds] };
+  return {
+    ...state,
+    nextNumber: state.nextNumber + 1,
+    builds: [saved, ...state.builds],
+  };
 }
 
 export function removeBuild(state: SavedState, id: string): SavedState {
@@ -207,21 +279,37 @@ export function clearBuilds(state: SavedState): SavedState {
   return { ...state, builds: [] };
 }
 
-export const THEMES = ["light", "dark", "contrast"] as const;
+export const THEMES = ["khaki", "graphite", "midnight"] as const;
 export type Theme = (typeof THEMES)[number];
 
+/** Older light / dark / contrast values; a saved contrast choice maps to Graphite. */
+const LEGACY_THEMES: Record<string, Theme> = {
+  light: "khaki",
+  dark: "graphite",
+  contrast: "graphite",
+};
+
 export function isTheme(value: unknown): value is Theme {
-  return typeof value === "string" && (THEMES as readonly string[]).includes(value);
+  return (
+    typeof value === "string" && (THEMES as readonly string[]).includes(value)
+  );
+}
+
+export function migrateTheme(value: unknown): Theme | null {
+  if (isTheme(value)) return value;
+  if (typeof value === "string" && value in LEGACY_THEMES)
+    return LEGACY_THEMES[value]!;
+  return null;
 }
 
 export function loadTheme(storage: StorageLike, prefersDark: boolean): Theme {
   try {
-    const stored = storage.getItem(THEME_KEY);
-    if (isTheme(stored)) return stored;
+    const migrated = migrateTheme(storage.getItem(THEME_KEY));
+    if (migrated) return migrated;
   } catch {
     /* fall through to the default */
   }
-  return prefersDark ? "dark" : "light";
+  return prefersDark ? "graphite" : "khaki";
 }
 
 export function saveTheme(storage: StorageLike, theme: Theme): void {
@@ -230,4 +318,32 @@ export function saveTheme(storage: StorageLike, theme: Theme): void {
   } catch {
     /* theme just will not persist */
   }
+}
+
+export const MOTION_KEY = "buildrig.motion.v1";
+export const MOTIONS = ["static", "animated"] as const;
+export type Motion = (typeof MOTIONS)[number];
+
+export function isMotion(value: unknown): value is Motion {
+  return value === "static" || value === "animated";
+}
+
+export function loadMotion(storage: StorageLike): Motion {
+  try {
+    return storage.getItem(MOTION_KEY) === "animated" ? "animated" : "static";
+  } catch {
+    return "static";
+  }
+}
+
+export function saveMotion(storage: StorageLike, motion: Motion): void {
+  try {
+    storage.setItem(MOTION_KEY, motion);
+  } catch {
+    /* motion just will not persist */
+  }
+}
+
+export function effectiveMotion(stored: Motion, reduced: boolean): Motion {
+  return reduced ? "static" : stored;
 }

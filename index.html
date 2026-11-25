@@ -1,10 +1,29 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="khaki" data-motion="static">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="BuildRig is a free PC build cost planner. Add parts, see your running total, and save builds in your browser." />
     <title>BuildRig | PC build cost planner</title>
+    <script>
+      // Apply the saved or system theme and motion before first paint to avoid a flash.
+      // Keep in sync with src/lib/storage.ts (light/dark/contrast migrate; contrast -> graphite).
+      (function () {
+        try {
+          var t = localStorage.getItem("buildrig.theme.v1");
+          if (t === "light") t = "khaki";
+          else if (t === "dark" || t === "contrast") t = "graphite";
+          else if (t !== "khaki" && t !== "graphite" && t !== "midnight") {
+            t = matchMedia("(prefers-color-scheme: dark)").matches ? "graphite" : "khaki";
+          }
+          document.documentElement.dataset.theme = t;
+          document.documentElement.style.colorScheme = t === "khaki" ? "light" : "dark";
+          var m = localStorage.getItem("buildrig.motion.v1") === "animated" ? "animated" : "static";
+          if (matchMedia("(prefers-reduced-motion: reduce)").matches) m = "static";
+          document.documentElement.dataset.motion = m;
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to the build form</a>
@@ -37,11 +56,16 @@
             <label class="theme-picker" for="themeSelect">
               Theme
               <select id="themeSelect">
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-                <option value="contrast">High contrast</option>
+                <option value="khaki">Khaki</option>
+                <option value="graphite">Graphite</option>
+                <option value="midnight">Midnight</option>
               </select>
             </label>
+            <button type="button" class="motion-toggle" id="motionToggle" aria-label="Animated motion" aria-pressed="false">
+              <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true">
+                <path d="M6 4.2v11.6L16.2 10 6 4.2z" fill="currentColor" />
+              </svg>
+            </button>
             <button class="btn btn-secondary" type="button" id="resetBtn">Reset build</button>
           </div>
         </div>

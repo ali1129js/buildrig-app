@@ -1,27 +1,53 @@
 import "./styles/themes.css";
 import "./styles/app.css";
-import { cloneBuild, emptyBuild, filledParts, summarize, type Build } from "./lib/build";
+import {
+  cloneBuild,
+  emptyBuild,
+  filledParts,
+  summarize,
+  type Build,
+} from "./lib/build";
 import { centsToInputValue, formatCents, parsePriceToCents } from "./lib/money";
-import { isPartName, MODEL_MAX_LENGTH, PARTS, type PartName } from "./lib/parts";
+import {
+  isPartName,
+  MODEL_MAX_LENGTH,
+  PARTS,
+  type PartName,
+} from "./lib/parts";
 import {
   addBuild,
   clearBuilds,
   defaultName,
+  effectiveMotion,
   isTheme,
+  loadMotion,
   loadState,
   loadTheme,
   removeBuild,
+  saveMotion,
   saveState,
   saveTheme,
+  type Motion,
   type SavedState,
-  type Theme
+  type Theme,
 } from "./lib/storage";
-import { getPreset, PRESETS, PRICE_NOTE, presetToBuild, presetTotalCents } from "./lib/presets";
+import {
+  getPreset,
+  PRESETS,
+  PRICE_NOTE,
+  presetToBuild,
+  presetTotalCents,
+} from "./lib/presets";
 import { applyImport, exportFilename, serializeExport } from "./lib/transfer";
 import { confirmAction } from "./ui/confirm";
 import { byId, el } from "./ui/dom";
 import { renderPresetInfo, renderRumours } from "./ui/examples";
-import { renderCompare, renderNav, renderSavedBuilds, renderTable } from "./ui/render";
+import {
+  renderCompare,
+  renderNav,
+  renderSavedBuilds,
+  renderTable,
+} from "./ui/render";
 
 /** Storage can throw just by being accessed (blocked cookies), so resolve it defensively. */
 function getStorage(): Storage | null {
@@ -38,7 +64,7 @@ const noStorage: Pick<Storage, "getItem" | "setItem"> = {
   },
   setItem: () => {
     throw new Error("storage unavailable");
-  }
+  },
 };
 
 const storage = getStorage() ?? noStorage;
@@ -59,6 +85,7 @@ const savedList = byId("savedBuildsList", HTMLElement);
 const compareRoot = byId("compareBuilds", HTMLElement);
 const buildNameInput = byId("buildNameInput", HTMLInputElement);
 const themeSelect = byId("themeSelect", HTMLSelectElement);
+const motionToggle = byId("motionToggle", HTMLButtonElement);
 const presetSelect = byId("presetSelect", HTMLSelectElement);
 const loadPresetBtn = byId("loadPresetBtn", HTMLButtonElement);
 const presetInfo = byId("presetInfo", HTMLElement);
@@ -76,7 +103,10 @@ function say(message: string): void {
 }
 
 function newId(): string {
-  const random = typeof crypto.randomUUID === "function" ? crypto.randomUUID() : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+  const random =
+    typeof crypto.randomUUID === "function"
+      ? crypto.randomUUID()
+      : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
   return `build-${random}`;
 }
 
@@ -114,12 +144,15 @@ function paintCompare(): void {
       compareRightId = right;
       paintCompare();
     },
-    onLoad: loadBuild
+    onLoad: loadBuild,
   });
 }
 
 function renderSaved(): void {
-  renderSavedBuilds(savedList, saved.builds, { onLoad: loadBuild, onDelete: deleteBuild });
+  renderSavedBuilds(savedList, saved.builds, {
+    onLoad: loadBuild,
+    onDelete: deleteBuild,
+  });
   paintCompare();
   buildNameInput.placeholder = `Default: ${defaultName(saved)}`;
 }
@@ -165,7 +198,7 @@ async function deleteBuild(id: string): Promise<void> {
   const ok = await confirmAction({
     title: "Delete this saved build?",
     message: `${found.name} will be removed from this browser. This cannot be undone.`,
-    confirmLabel: "Delete build"
+    confirmLabel: "Delete build",
   });
   if (!ok) return;
   persist(removeBuild(saved, id), `Deleted ${found.name} from local storage.`);
@@ -179,18 +212,22 @@ byId("buildForm", HTMLFormElement).addEventListener("submit", (event) => {
   const rawPrice = priceInput.value.trim();
   const priceCents = rawPrice === "" ? 0 : parsePriceToCents(rawPrice);
   if (priceCents === null) {
-    priceError.textContent = "Enter a price like 349,99 or 349.99 (up to 9999999,99).";
+    priceError.textContent =
+      "Enter a price like 349,99 or 349.99 (up to 9999999,99).";
     priceInput.setAttribute("aria-invalid", "true");
     priceInput.focus();
     return;
   }
   build = { ...build, [part]: { model, priceCents } };
   selectPart(part, false);
-  say(model === "" && priceCents === 0 ? `Cleared ${part}.` : `Updated ${part}.`);
+  say(
+    model === "" && priceCents === 0 ? `Cleared ${part}.` : `Updated ${part}.`,
+  );
 });
 
 componentSelect.addEventListener("change", () => {
-  if (isPartName(componentSelect.value)) selectPart(componentSelect.value, false);
+  if (isPartName(componentSelect.value))
+    selectPart(componentSelect.value, false);
 });
 
 function showPresetInfo(): void {
@@ -208,21 +245,24 @@ loadPresetBtn.addEventListener("click", async () => {
     const ok = await confirmAction({
       title: "Replace the current build?",
       message: `Loading "${preset.name}" replaces the parts in the calculator. Saved builds are not affected.`,
-      confirmLabel: "Load example"
+      confirmLabel: "Load example",
     });
     if (!ok) return;
   }
   build = presetToBuild(preset);
   selectPart("CPU", false);
-  say(`Loaded the example "${preset.name}" (${formatCents(presetTotalCents(preset))}). Your saved builds are untouched. ${PRICE_NOTE}`);
+  say(
+    `Loaded the example "${preset.name}" (${formatCents(presetTotalCents(preset))}). Your saved builds are untouched. ${PRICE_NOTE}`,
+  );
 });
 
 byId("resetBtn", HTMLButtonElement).addEventListener("click", async () => {
   if (filledParts(build).length > 0) {
     const ok = await confirmAction({
       title: "Reset the current build?",
-      message: "All parts you have entered will be cleared. Saved builds are not affected.",
-      confirmLabel: "Reset build"
+      message:
+        "All parts you have entered will be cleared. Saved builds are not affected.",
+      confirmLabel: "Reset build",
     });
     if (!ok) return;
   }
@@ -236,7 +276,7 @@ byId("saveBtn", HTMLButtonElement).addEventListener("click", () => {
     id: newId(),
     name: buildNameInput.value,
     savedAt: new Date().toISOString(),
-    parts: cloneBuild(build)
+    parts: cloneBuild(build),
   });
   if (!next) {
     say("Add at least one component before saving a build.");
@@ -244,7 +284,10 @@ byId("saveBtn", HTMLButtonElement).addEventListener("click", () => {
   }
   const count = filledParts(build).length;
   const name = next.builds[0]?.name ?? "build";
-  persist(next, `Saved ${name} with ${count} ${count === 1 ? "part" : "parts"} to this browser's local storage. It stays after a refresh.`);
+  persist(
+    next,
+    `Saved ${name} with ${count} ${count === 1 ? "part" : "parts"} to this browser's local storage. It stays after a refresh.`,
+  );
   if (next === saved) buildNameInput.value = "";
 });
 
@@ -257,10 +300,13 @@ byId("clearSavedBtn", HTMLButtonElement).addEventListener("click", async () => {
   const ok = await confirmAction({
     title: "Clear all saved builds?",
     message: `${count} saved ${count === 1 ? "build" : "builds"} will be removed from this browser. This cannot be undone.`,
-    confirmLabel: "Clear all"
+    confirmLabel: "Clear all",
   });
   if (!ok) return;
-  persist(clearBuilds(saved), "All saved builds were cleared from local storage.");
+  persist(
+    clearBuilds(saved),
+    "All saved builds were cleared from local storage.",
+  );
 });
 
 function downloadJson(filename: string, contents: string): void {
@@ -300,7 +346,28 @@ importFile.addEventListener("change", async () => {
 
 function applyTheme(theme: Theme): void {
   document.documentElement.setAttribute("data-theme", theme);
+  document.documentElement.style.colorScheme =
+    theme === "khaki" ? "light" : "dark";
   themeSelect.value = theme;
+}
+
+function applyMotion(motion: Motion): void {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const effective = effectiveMotion(motion, reduced);
+  document.documentElement.dataset.motion = effective;
+  motionToggle.disabled = reduced;
+  motionToggle.setAttribute(
+    "aria-pressed",
+    effective === "animated" ? "true" : "false",
+  );
+  motionToggle.setAttribute(
+    "aria-label",
+    reduced ? "Animated motion (reduced motion is on)" : "Animated motion",
+  );
+  motionToggle.innerHTML =
+    effective === "animated"
+      ? '<svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><rect x="4.5" y="4" width="4" height="12" rx="1.2" fill="currentColor" /><rect x="11.5" y="4" width="4" height="12" rx="1.2" fill="currentColor" /></svg>'
+      : '<svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M6 4.2v11.6L16.2 10 6 4.2z" fill="currentColor" /></svg>';
 }
 
 themeSelect.addEventListener("change", () => {
@@ -310,14 +377,39 @@ themeSelect.addEventListener("change", () => {
   }
 });
 
+let motionPref = loadMotion(storage);
+motionToggle.addEventListener("click", () => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  motionPref = motionPref === "animated" ? "static" : "animated";
+  saveMotion(storage, motionPref);
+  applyMotion(motionPref);
+});
+
 presetSelect.append(el("option", { value: "" }, "Choose an example..."));
-for (const preset of PRESETS) presetSelect.append(el("option", { value: preset.id }, `${preset.name} (${formatCents(presetTotalCents(preset))})`));
+for (const preset of PRESETS)
+  presetSelect.append(
+    el(
+      "option",
+      { value: preset.id },
+      `${preset.name} (${formatCents(presetTotalCents(preset))})`,
+    ),
+  );
 showPresetInfo();
-renderRumours(byId("rumourNote", HTMLElement), byId("rumoursList", HTMLElement));
-for (const part of PARTS) componentSelect.append(el("option", { value: part }, part));
-applyTheme(loadTheme(storage, window.matchMedia("(prefers-color-scheme: dark)").matches));
+renderRumours(
+  byId("rumourNote", HTMLElement),
+  byId("rumoursList", HTMLElement),
+);
+for (const part of PARTS)
+  componentSelect.append(el("option", { value: part }, part));
+applyTheme(
+  loadTheme(storage, window.matchMedia("(prefers-color-scheme: dark)").matches),
+);
+applyMotion(motionPref);
 selectPart("CPU", false);
 renderSaved();
 
 if (loaded.error) say(loaded.error);
-else if (loaded.skipped > 0) say(`${loaded.skipped} saved ${loaded.skipped === 1 ? "build was" : "builds were"} unreadable and skipped.`);
+else if (loaded.skipped > 0)
+  say(
+    `${loaded.skipped} saved ${loaded.skipped === 1 ? "build was" : "builds were"} unreadable and skipped.`,
+  );

@@ -1,7 +1,10 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
-const css = readFileSync(new URL("../src/styles/themes.css", import.meta.url), "utf8");
+const css = readFileSync(
+  new URL("../src/styles/themes.css", import.meta.url),
+  "utf8",
+);
 
 function parseTheme(selector: string): Record<string, string> {
   const start = css.indexOf(selector);
@@ -25,7 +28,10 @@ function luminance(hex: string): number {
 }
 
 export function contrast(a: string, b: string): number {
-  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x) as [number, number];
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x) as [
+    number,
+    number,
+  ];
   return (hi + 0.05) / (lo + 0.05);
 }
 
@@ -49,7 +55,7 @@ const TEXT_PAIRS: Array<[string, string]> = [
   ["table-text", "table-bg"],
   ["table-text", "table-alt"],
   ["table-head-text", "table-head-bg"],
-  ["banner-text", "banner-bg"]
+  ["banner-text", "banner-bg"],
 ];
 
 const NON_TEXT_PAIRS: Array<[string, string]> = [
@@ -62,13 +68,13 @@ const NON_TEXT_PAIRS: Array<[string, string]> = [
   ["focus", "surface-2"],
   ["primary", "surface"],
   ["table-border", "table-bg"],
-  ["table-border", "table-alt"]
+  ["table-border", "table-alt"],
 ];
 
 const THEMES: Array<[string, string]> = [
-  ["light", ':root,\n[data-theme="light"]'],
-  ["dark", '[data-theme="dark"]'],
-  ["contrast", '[data-theme="contrast"]']
+  ["khaki", ':root:not([data-theme]),\n[data-theme="khaki"]'],
+  ["graphite", '[data-theme="graphite"]'],
+  ["midnight", '[data-theme="midnight"]'],
 ];
 
 describe.each(THEMES)("theme %s", (_name, selector) => {
@@ -79,19 +85,23 @@ describe.each(THEMES)("theme %s", (_name, selector) => {
     const bgValue = tokens[bg];
     expect(fgValue, `token ${fg}`).toBeDefined();
     expect(bgValue, `token ${bg}`).toBeDefined();
-    expect(contrast(fgValue as string, bgValue as string)).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrast(fgValue as string, bgValue as string),
+    ).toBeGreaterThanOrEqual(4.5);
   });
 
   it.each(NON_TEXT_PAIRS)("%s against %s has at least 3:1", (fg, bg) => {
-    expect(contrast(tokens[fg] as string, tokens[bg] as string)).toBeGreaterThanOrEqual(3);
+    expect(
+      contrast(tokens[fg] as string, tokens[bg] as string),
+    ).toBeGreaterThanOrEqual(3);
   });
 });
 
 describe("all themes define the same tokens", () => {
-  it("matches the light token set", () => {
-    const light = Object.keys(parseTheme(THEMES[0]![1])).sort();
+  it("matches the khaki token set", () => {
+    const khaki = Object.keys(parseTheme(THEMES[0]![1])).sort();
     for (const [, selector] of THEMES.slice(1)) {
-      expect(Object.keys(parseTheme(selector)).sort()).toEqual(light);
+      expect(Object.keys(parseTheme(selector)).sort()).toEqual(khaki);
     }
   });
 });

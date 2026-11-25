@@ -6,20 +6,24 @@ import {
   defaultName,
   emptyState,
   loadState,
+  effectiveMotion,
+  loadMotion,
   loadTheme,
+  migrateTheme,
   parseSavedBuild,
   removeBuild,
   saveState,
   LEGACY_STORAGE_KEY,
+  MOTION_KEY,
   STORAGE_KEY,
-  THEME_KEY
+  THEME_KEY,
 } from "../src/lib/storage";
 
 function memory(initial: Record<string, string> = {}) {
   const data = new Map(Object.entries(initial));
   return {
     getItem: (key: string) => data.get(key) ?? null,
-    setItem: (key: string, value: string) => void data.set(key, value)
+    setItem: (key: string, value: string) => void data.set(key, value),
   };
 }
 
@@ -29,17 +33,28 @@ function filledBuild() {
   return parts;
 }
 
-const input = (id: string, name = "") => ({ id, name, savedAt: "2026-01-01T10:00:00.000Z", parts: filledBuild() });
+const input = (id: string, name = "") => ({
+  id,
+  name,
+  savedAt: "2026-01-01T10:00:00.000Z",
+  parts: filledBuild(),
+});
 
 describe("naming", () => {
   it("never reuses a default name after deletes", () => {
     let state = emptyState();
     state = addBuild(state, input("a"))!;
     state = addBuild(state, input("b"))!;
-    expect(state.builds.map((item) => item.name)).toEqual(["Build 2", "Build 1"]);
+    expect(state.builds.map((item) => item.name)).toEqual([
+      "Build 2",
+      "Build 1",
+    ]);
     state = removeBuild(state, "b");
     state = addBuild(state, input("c"))!;
-    expect(state.builds.map((item) => item.name)).toEqual(["Build 3", "Build 1"]);
+    expect(state.builds.map((item) => item.name)).toEqual([
+      "Build 3",
+      "Build 1",
+    ]);
     state = clearBuilds(state);
     expect(defaultName(state)).toBe("Build 4");
   });
@@ -51,7 +66,9 @@ describe("naming", () => {
   });
 
   it("refuses to save an empty build", () => {
-    expect(addBuild(emptyState(), { ...input("a"), parts: emptyBuild() })).toBeNull();
+    expect(
+      addBuild(emptyState(), { ...input("a"), parts: emptyBuild() }),
+    ).toBeNull();
   });
 });
 
@@ -73,7 +90,9 @@ describe("round trip and validation", () => {
   });
 
   it("returns an empty state for the wrong shape", () => {
-    expect(loadState(memory({ [STORAGE_KEY]: '{"version":1}' })).error).not.toBeNull();
+    expect(
+      loadState(memory({ [STORAGE_KEY]: '{"version":1}' })).error,
+    ).not.toBeNull();
     expect(loadState(memory({ [STORAGE_KEY]: "42" })).error).not.toBeNull();
   });
 
@@ -82,7 +101,13 @@ describe("round trip and validation", () => {
     const raw = JSON.stringify({
       version: 2,
       nextNumber: 5,
-      builds: [good, { id: "bad", name: "x", savedAt: "nope", parts: {} }, { id: 5 }, null, good]
+      builds: [
+        good,
+        { id: "bad", name: "x", savedAt: "nope", parts: {} },
+        { id: 5 },
+        null,
+        good,
+      ],
     });
     const loaded = loadState(memory({ [STORAGE_KEY]: raw }));
     expect(loaded.state.builds).toHaveLength(1);
@@ -92,11 +117,33 @@ describe("round trip and validation", () => {
 
   it("rejects fractional, negative and oversize prices and long models", () => {
     const base = { id: "a", name: "n", savedAt: "2026-01-01T00:00:00Z" };
-    expect(parseSavedBuild({ ...base, parts: { CPU: { model: "m", priceCents: 1.5 } } })).toBeNull();
-    expect(parseSavedBuild({ ...base, parts: { CPU: { model: "m", priceCents: -1 } } })).toBeNull();
-    expect(parseSavedBuild({ ...base, parts: { CPU: { model: "m", priceCents: 1e12 } } })).toBeNull();
-    expect(parseSavedBuild({ ...base, parts: { CPU: { model: "x".repeat(61), priceCents: 1 } } })).toBeNull();
-    expect(parseSavedBuild({ ...base, parts: { CPU: { model: 5, priceCents: 1 } } })).toBeNull();
+    expect(
+      parseSavedBuild({
+        ...base,
+        parts: { CPU: { model: "m", priceCents: 1.5 } },
+      }),
+    ).toBeNull();
+    expect(
+      parseSavedBuild({
+        ...base,
+        parts: { CPU: { model: "m", priceCents: -1 } },
+      }),
+    ).toBeNull();
+    expect(
+      parseSavedBuild({
+        ...base,
+        parts: { CPU: { model: "m", priceCents: 1e12 } },
+      }),
+    ).toBeNull();
+    expect(
+      parseSavedBuild({
+        ...base,
+        parts: { CPU: { model: "x".repeat(61), priceCents: 1 } },
+      }),
+    ).toBeNull();
+    expect(
+      parseSavedBuild({ ...base, parts: { CPU: { model: 5, priceCents: 1 } } }),
+    ).toBeNull();
   });
 
   it("ignores unknown part keys and recomputes the total from parts", () => {
@@ -105,7 +152,10 @@ describe("round trip and validation", () => {
       name: "n",
       savedAt: "2026-01-01T00:00:00Z",
       totalCents: 999,
-      parts: { CPU: { model: "m", priceCents: 100 }, Toaster: { model: "z", priceCents: 5 } }
+      parts: {
+        CPU: { model: "m", priceCents: 100 },
+        Toaster: { model: "z", priceCents: 5 },
+      },
     });
     expect(parsed?.totalCents).toBe(100);
     expect(parsed?.parts).not.toHaveProperty("Toaster");
@@ -117,7 +167,9 @@ describe("round trip and validation", () => {
     const state = addBuild(emptyState(), { ...input("a"), parts })!;
     const storage = memory();
     saveState(storage, state);
-    expect(loadState(storage).state.builds[0]?.parts.CPU.model).toBe("<img src=x onerror=alert(1)>");
+    expect(loadState(storage).state.builds[0]?.parts.CPU.model).toBe(
+      "<img src=x onerror=alert(1)>",
+    );
   });
 });
 
@@ -127,7 +179,7 @@ describe("storage errors", () => {
       getItem: () => null,
       setItem: () => {
         throw new DOMException("quota", "QuotaExceededError");
-      }
+      },
     };
     expect(saveState(failing, emptyState()).ok).toBe(false);
   });
@@ -137,12 +189,12 @@ describe("storage errors", () => {
       getItem: () => {
         throw new Error("blocked");
       },
-      setItem: () => undefined
+      setItem: () => undefined,
     };
     const loaded = loadState(failing);
     expect(loaded.state.builds).toEqual([]);
     expect(loaded.error).not.toBeNull();
-    expect(loadTheme(failing, true)).toBe("dark");
+    expect(loadTheme(failing, true)).toBe("graphite");
   });
 });
 
@@ -154,11 +206,16 @@ describe("legacy v1 migration", () => {
         name: "Build 1",
         savedAt: "2026-01-01T10:00:00.000Z",
         total: 349.99,
-        parts: { CPU: { model: "Ryzen", price: 349.99 }, GPU: { model: "", price: 0 } }
+        parts: {
+          CPU: { model: "Ryzen", price: 349.99 },
+          GPU: { model: "", price: 0 },
+        },
       },
-      "junk"
+      "junk",
     ];
-    const loaded = loadState(memory({ [LEGACY_STORAGE_KEY]: JSON.stringify(legacy) }));
+    const loaded = loadState(
+      memory({ [LEGACY_STORAGE_KEY]: JSON.stringify(legacy) }),
+    );
     expect(loaded.state.builds[0]?.parts.CPU.priceCents).toBe(34999);
     expect(loaded.state.builds[0]?.totalCents).toBe(34999);
     expect(loaded.skipped).toBe(1);
@@ -166,9 +223,32 @@ describe("legacy v1 migration", () => {
 });
 
 describe("theme", () => {
-  it("uses a stored theme, else the system preference", () => {
-    expect(loadTheme(memory({ [THEME_KEY]: "contrast" }), false)).toBe("contrast");
-    expect(loadTheme(memory({ [THEME_KEY]: "neon" }), false)).toBe("light");
-    expect(loadTheme(memory(), true)).toBe("dark");
+  it("uses a stored gloss theme, else the system preference", () => {
+    expect(loadTheme(memory({ [THEME_KEY]: "midnight" }), false)).toBe(
+      "midnight",
+    );
+    expect(loadTheme(memory({ [THEME_KEY]: "neon" }), false)).toBe("khaki");
+    expect(loadTheme(memory(), true)).toBe("graphite");
+    expect(loadTheme(memory(), false)).toBe("khaki");
+  });
+
+  it("maps a saved contrast choice to Graphite, and light/dark to Khaki/Graphite", () => {
+    expect(migrateTheme("contrast")).toBe("graphite");
+    expect(migrateTheme("light")).toBe("khaki");
+    expect(migrateTheme("dark")).toBe("graphite");
+    expect(loadTheme(memory({ [THEME_KEY]: "contrast" }), false)).toBe(
+      "graphite",
+    );
+    expect(loadTheme(memory({ [THEME_KEY]: "light" }), true)).toBe("khaki");
+    expect(loadTheme(memory({ [THEME_KEY]: "dark" }), false)).toBe("graphite");
+  });
+});
+
+describe("motion preference", () => {
+  it("defaults to static and only stores animated when chosen", () => {
+    expect(loadMotion(memory())).toBe("static");
+    expect(loadMotion(memory({ [MOTION_KEY]: "animated" }))).toBe("animated");
+    expect(effectiveMotion("animated", true)).toBe("static");
+    expect(effectiveMotion("animated", false)).toBe("animated");
   });
 });

@@ -91,13 +91,13 @@ await page.fill("#buildNameInput", "Budget build");
 await setPart("Primary SSD", "1 TB NVMe", "69,99");
 await page.click("#saveBtn");
 
-for (const theme of ["light", "dark", "contrast"]) {
+for (const theme of ["khaki", "graphite", "midnight"]) {
   await page.selectOption("#themeSelect", theme);
   await page.waitForTimeout(250);
   await page.screenshot({ path: `${outDir}/theme-${theme}.png`, fullPage: true });
 }
 await page.reload();
-check("theme persists after reload", (await page.getAttribute("html", "data-theme")) === "contrast");
+check("theme persists after reload", (await page.getAttribute("html", "data-theme")) === "midnight");
 
 // Example builds: preview, confirm when the build has data, saved builds untouched.
 const savedBefore = await page.locator(".saved-card").count();
@@ -143,7 +143,7 @@ check("rumours section is labelled rumoured and has no euro amounts", await (asy
   return text.includes("Coming 2027 (rumoured)") && text.includes("Rumoured") && !text.includes("€");
 })());
 check("no em or en dashes in page text", !/[\u2013\u2014]/.test((await page.textContent("body")) ?? ""));
-for (const theme of ["dark", "light", "contrast"]) {
+for (const theme of ["graphite", "khaki", "midnight"]) {
   await page.selectOption("#themeSelect", theme);
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.waitForTimeout(250);
@@ -153,8 +153,8 @@ for (const theme of ["dark", "light", "contrast"]) {
 const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 2 });
 const mp = await mobile.newPage();
 await mp.goto(url);
-await mp.selectOption("#themeSelect", "dark");
-await mp.screenshot({ path: `${outDir}/mobile-dark.png`, fullPage: true });
+await mp.selectOption("#themeSelect", "graphite");
+await mp.screenshot({ path: `${outDir}/mobile-graphite.png`, fullPage: true });
 
 check("no external requests", external.length === 0);
 check("no native alert/confirm dialogs used", dialogs.length === 0);

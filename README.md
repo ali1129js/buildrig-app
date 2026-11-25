@@ -17,7 +17,7 @@ Live demo: https://ali1129js.github.io/buildrig-app/
 - Confirmation before deleting a build, clearing all saved builds, or resetting the current build
 - Load example build: six ready-made builds for different purposes (4K gaming, budget gaming, coding, local AI, content creation, compact and quiet). Loading replaces only the calculator, asks first if it has data, and never touches saved builds
 - "Coming 2027 (rumoured)" info section with sources and no prices
-- Three themes: light, dark, and high contrast (saved per browser)
+- Three gloss themes (Khaki, Graphite, Midnight), saved per browser. A previously saved High contrast choice maps to Graphite. Motion stays off by default and is forced off when you prefer reduced motion.
 - Prices stored as integer cents and shown as de-DE euros, for example `1.234,56 €`
 - Accessible: labelled fields, visible focus, live status messages, reduced motion support
 - No tracking, no external requests, system font stack
