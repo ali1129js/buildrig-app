@@ -26,8 +26,8 @@ function part(model: string, priceCents: number): PartEntry {
 const IGPU = "Integrated Radeon graphics (in the CPU)";
 
 /**
- * Example builds for Germany, Nov 2026. Prices are the lowest listed German offers found on
- * 1 Nov 2026 (idealo, Geizhals, hardwareschotte and similar), in integer cents.
+ * Example builds for Germany, Nov 2026. Prices are the lowest listed German offers, last refreshed on
+ * 27 Nov 2026 (idealo, Geizhals, hardwareschotte and similar), in integer cents.
  * Sources for every part are in buildrig-research.md.
  */
 export const PRESETS: readonly Preset[] = [
@@ -38,17 +38,17 @@ export const PRESETS: readonly Preset[] = [
     why: "X3D CPU for the best gaming frame rates, an RTX 5080 for 4K, and a 4K OLED monitor to match. Built on AM5, which keeps CPU upgrades possible.",
     notes: ["The 5080 price differs a lot between shops and has been rising, so check it before buying.", "A second SSD is optional and left empty."],
     parts: {
-      CPU: part("AMD Ryzen 7 9850X3D", 43720),
-      Motherboard: part("MSI MAG B850 Tomahawk WiFi", 21763),
-      RAM: part("Kingston Fury Beast RGB 32GB DDR5-6000 CL30", 59500),
-      GPU: part("Gainward GeForce RTX 5080 Phoenix GS V1 16GB", 186100),
-      "Primary SSD": part("Samsung 990 Pro 2TB", 38174),
+      CPU: part("AMD Ryzen 7 9850X3D", 39890),
+      Motherboard: part("MSI MAG B850 Tomahawk WiFi", 23669),
+      RAM: part("Kingston Fury Beast RGB 32GB DDR5-6000 CL30", 62890),
+      GPU: part("Gainward GeForce RTX 5080 Phoenix GS V1 16GB", 199900),
+      "Primary SSD": part("Samsung 990 Pro 2TB", 39025),
       Case: part("Fractal Design North XL TG Dark", 16253),
-      "Power Supply": part("Corsair RM1000x SHIFT 1000W", 16980),
-      Cooling: part("Arctic Liquid Freezer III Pro 360", 7026),
-      Monitor: part("Gigabyte MO27U2 27in 4K 240Hz QD-OLED", 57900),
-      "Extra 1": part("Logitech G Pro X TKL Rapid keyboard", 12498),
-      "Extra 2": part("Logitech G Pro X Superlight 2 mouse", 9699)
+      "Power Supply": part("Corsair RM1000x SHIFT 1000W", 18400),
+      Cooling: part("Arctic Liquid Freezer III Pro 360", 6290),
+      Monitor: part("Gigabyte MO27U2 27in 4K 240Hz QD-OLED", 54900),
+      "Extra 1": part("Logitech G Pro X TKL Rapid keyboard", 11300),
+      "Extra 2": part("Logitech G Pro X Superlight 2 mouse", 8919)
     }
   },
   {
@@ -65,7 +65,7 @@ export const PRESETS: readonly Preset[] = [
       CPU: part("AMD Ryzen 5 5600 (boxed, with cooler)", 12631),
       Motherboard: part("Gigabyte B550 X Gaming WiFi7 (AM4)", 13599),
       RAM: part("G.Skill Aegis 16GB (2x8) DDR4-3200 CL16", 11999),
-      GPU: part("MSI GeForce RTX 5060 Ventus 2X OC 8GB", 46779),
+      GPU: part("MSI GeForce RTX 5060 Ventus 2X OC 8GB", 51900),
       "Primary SSD": part("Kingston NV3 1TB", 14390),
       Case: part("Montech Air 1000 Lite", 5372),
       "Power Supply": part("be quiet! System Power 11 550W", 5331),
@@ -85,16 +85,16 @@ export const PRESETS: readonly Preset[] = [
     ],
     parts: {
       CPU: part("AMD Ryzen 9 9900X", 30800),
-      Motherboard: part("MSI MAG B850 Tomahawk WiFi", 21763),
-      RAM: part("Kingston Fury Beast RGB 32GB DDR5-6000 CL30", 59500),
+      Motherboard: part("MSI MAG B850 Tomahawk WiFi", 23669),
+      RAM: part("Kingston Fury Beast RGB 32GB DDR5-6000 CL30", 62890),
       GPU: part(IGPU, 0),
-      "Primary SSD": part("WD_BLACK SN7100 2TB", 29541),
+      "Primary SSD": part("WD_BLACK SN7100 2TB", 30427),
       Case: part("Fractal Design North TG Dark", 12845),
       "Power Supply": part("be quiet! System Power 11 550W", 5331),
       Cooling: part("Thermalright Peerless Assassin 120 SE", 3429),
-      Monitor: part("Dell UltraSharp U2725QE 27in 4K", 58190),
-      "Extra 1": part("Logitech MX Keys S keyboard", 6999),
-      "Extra 2": part("Logitech MX Master 3S mouse", 7399)
+      Monitor: part("Dell UltraSharp U2725QE 27in 4K", 59190),
+      "Extra 1": part("Logitech MX Keys S keyboard", 6499),
+      "Extra 2": part("Logitech MX Master 3S mouse", 6899)
     }
   },
   {
@@ -108,12 +108,12 @@ export const PRESETS: readonly Preset[] = [
       "No monitor is included. Use one you already own or run it headless."
     ],
     parts: {
-      CPU: part("AMD Ryzen 7 9700X", 23490),
-      Motherboard: part("MSI MAG B850 Tomahawk WiFi", 21763),
-      RAM: part("Crucial Pro 64GB (2x32) DDR5-6400 CL40", 97999),
-      GPU: part("PowerColor Radeon AI PRO R9700 32GB", 219414),
-      "Primary SSD": part("WD_BLACK SN7100 2TB", 29541),
-      "Storage II": part("Kingston NV3 2TB (model files)", 26490),
+      CPU: part("AMD Ryzen 7 9700X", 22985),
+      Motherboard: part("MSI MAG B850 Tomahawk WiFi", 23669),
+      RAM: part("Crucial Pro 64GB (2x32) DDR5-6400 CL40", 109900),
+      GPU: part("PowerColor Radeon AI PRO R9700 32GB", 223000),
+      "Primary SSD": part("WD_BLACK SN7100 2TB", 30427),
+      "Storage II": part("Kingston NV3 2TB (model files)", 25490),
       Case: part("Fractal Design North XL TG Dark", 16253),
       "Power Supply": part("be quiet! Pure Power 13 M 850W", 11900),
       Cooling: part("Thermalright Peerless Assassin 120 SE", 3429)
@@ -129,18 +129,18 @@ export const PRESETS: readonly Preset[] = [
       "Add a hardware colour calibrator if colour accuracy matters to you."
     ],
     parts: {
-      CPU: part("Intel Core Ultra 7 270K Plus", 31900),
-      Motherboard: part("ASUS TUF Gaming Z890-Plus WiFi", 23890),
-      RAM: part("Crucial Pro 64GB (2x32) DDR5-6400 CL40", 97999),
-      GPU: part("MSI GeForce RTX 5070 Ti 16G Ventus 3X OC", 132900),
-      "Primary SSD": part("Samsung 990 Pro 2TB", 38174),
-      "Storage II": part("Kingston NV3 2TB (media and cache)", 26490),
+      CPU: part("Intel Core Ultra 7 270K Plus", 29387),
+      Motherboard: part("ASUS TUF Gaming Z890-Plus WiFi", 26600),
+      RAM: part("Crucial Pro 64GB (2x32) DDR5-6400 CL40", 109900),
+      GPU: part("MSI GeForce RTX 5070 Ti 16G Ventus 3X OC", 134900),
+      "Primary SSD": part("Samsung 990 Pro 2TB", 39025),
+      "Storage II": part("Kingston NV3 2TB (media and cache)", 25490),
       Case: part("Fractal Design North XL TG Dark", 16253),
       "Power Supply": part("be quiet! Pure Power 13 M 850W", 11900),
-      Cooling: part("Arctic Liquid Freezer III Pro 360", 7026),
-      Monitor: part("Dell UltraSharp U2725QE 27in 4K", 58190),
-      "Extra 1": part("Logitech MX Master 3S mouse", 7399),
-      "Extra 2": part("Logitech MX Keys S keyboard", 6999)
+      Cooling: part("Arctic Liquid Freezer III Pro 360", 6290),
+      Monitor: part("Dell UltraSharp U2725QE 27in 4K", 59190),
+      "Extra 1": part("Logitech MX Master 3S mouse", 6899),
+      "Extra 2": part("Logitech MX Keys S keyboard", 6499)
     }
   },
   {
@@ -154,13 +154,13 @@ export const PRESETS: readonly Preset[] = [
       "No monitor is included."
     ],
     parts: {
-      CPU: part("AMD Ryzen 5 9600X", 16900),
+      CPU: part("AMD Ryzen 5 9600X", 15490),
       Motherboard: part("ASRock B850I Lightning WiFi (Mini-ITX)", 18735),
-      RAM: part("G.Skill Flare X5 16GB (2x8) DDR5-6000 CL30", 30290),
+      RAM: part("G.Skill Flare X5 16GB (2x8) DDR5-6000 CL30", 30915),
       GPU: part(IGPU, 0),
       "Primary SSD": part("Kingston NV3 1TB", 14390),
       Case: part("Fractal Design Terra", 16990),
-      "Power Supply": part("be quiet! SFX Power 3 450W", 6889),
+      "Power Supply": part("be quiet! SFX Power 3 450W", 6345),
       Cooling: part("Noctua NH-L9a-AM5", 4990),
       "Extra 1": part("Logitech MK295 Silent keyboard and mouse combo", 3499)
     }

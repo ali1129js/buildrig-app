@@ -8,12 +8,12 @@ import { parseBuild } from "../src/lib/storage";
 
 /** Totals written down independently of the code, from buildrig-research.md. */
 const EXPECTED_TOTALS_CENTS: Record<string, number> = {
-  "gaming-4k": 469613,
-  "gaming-budget": 112181,
-  "dev-workstation": 235797,
-  "local-ai": 450279,
-  "content-creation": 459120,
-  "compact-quiet": 112683
+  "gaming-4k": 481436,
+  "gaming-budget": 117302,
+  "dev-workstation": 241979,
+  "local-ai": 467053,
+  "content-creation": 472333,
+  "compact-quiet": 111354
 };
 
 const DASHES = /[\u2013\u2014]/;
@@ -66,14 +66,14 @@ describe("presets", () => {
   it("formats totals as de-DE euros", () => {
     const preset = getPreset("gaming-4k");
     expect(preset).toBeDefined();
-    expect(formatCents(presetTotalCents(preset!)).replace(/\s/g, " ")).toBe("4.696,13 €");
+    expect(formatCents(presetTotalCents(preset!)).replace(/\s/g, " ")).toBe("4.814,36 €");
   });
 
   it("presetToBuild returns copies, so editing a build never changes a preset", () => {
     const preset = getPreset("compact-quiet")!;
     const build = presetToBuild(preset);
     build.CPU.priceCents = 1;
-    expect(presetToBuild(preset).CPU.priceCents).toBe(16900);
+    expect(presetToBuild(preset).CPU.priceCents).toBe(15490);
   });
 
   it("has purpose, why and notes text, and uses no em or en dashes", () => {
