@@ -47,7 +47,9 @@ npm run preview    # serve the production build
 
 ## Deploy
 
-The demo is served by GitHub Pages from the `gh-pages` branch. `npm run deploy` builds the app and publishes `dist/` to that branch with the `gh-pages` package.
+The demo is served by GitHub Pages from `.github/workflows/deploy.yml`. On every push and pull request the workflow typechecks, tests and builds the app. On a push to `master` (or `main`) it also deploys `dist/` with `actions/deploy-pages`.
+
+In the GitHub repo, set **Settings → Pages → Source** to **GitHub Actions**. It used to be the `gh-pages` branch, published by the `gh-pages` npm package (`npm run deploy`). That local command and the package are gone; a push to `master` is what updates the live demo.
 
 ## Optional: screenshots
 
